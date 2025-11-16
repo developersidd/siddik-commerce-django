@@ -3,13 +3,16 @@
 {% csrf_token %}
 <div class="col-md-3">
   <div class="card card-product-grid">
-    <a href="{{ product.get_url }}" class="img-wrap">
+    <div class="img-wrap">
       <img src="{{ product.images.url }}" />
-    </a>
+      <a class="btn-overlay" href="{{ product.get_url }}"><i class="fa fa-search-plus"></i> Quick view</a>
+    </div>
     {% if product.get_active_discount_info.name %}
       <span class="badge badge-info">{{ product.get_active_discount_info.name }}</span>
-    {% elif product.get_active_discount_info and product.get_active_discount_info.percent > 0 %}
+    {% elif product.get_active_discount_info.percent > 0 %}
       <span class="badge badge-danger discount-badge start-1">&minus;{{ product.get_active_discount_info.percent }} %</span>
+    {% elif badge_text %}
+      <span class="badge badge-danger">{{ badge_text }}</span>
     {% endif %}
     <figcaption class="info-wrap">
       <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>

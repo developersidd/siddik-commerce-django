@@ -1,6 +1,12 @@
 {% if messages %}
     {% for message in messages %}
-        <div id="message" class="container pr-2">
+        <div id="message"
+             class="container pr-2"
+             style="position: fixed;
+                    bottom: 30px;
+                    right: 5px;
+                    z-index: 1050;
+                    width: 550px">
             <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}
                  role="alert">
                 <button type="button" class="close" data-dismiss="alert">
@@ -10,5 +16,14 @@
                 {{ message }}
             </div>
         </div>
+        <script>
+            // Auto-dismiss the alert after 5 seconds
+            setTimeout(function() {
+                let alertElement = document.getElementById('message');
+                if (alertElement) {
+                    alertElement.style.visibility = 'hidden';
+                }
+            }, 5000);
+        </script>
     {% endfor %}
 {% endif %}

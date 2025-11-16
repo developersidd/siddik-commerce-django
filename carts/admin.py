@@ -12,5 +12,24 @@ class CartAdmin(admin.ModelAdmin):
 
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
-    list_display = ("product", "cart", "quantity", "user", "is_active")
+    def get_variations(self, obj: CartItem):
+        # obj is the CartItem instance
+        # self is the CartItemAdmin instance
+        return ", ".join(
+            [
+                f"{var.variation_category}: {var.variation_value}"
+                for var in obj.variations.all()
+            ]
+        )
+
+    get_variations.short_description = "Variations"
+
+    list_display = (
+        "product",
+        "cart",
+        "quantity",
+        "user",
+        "get_variations",
+        "is_active",
+    )
     list_filter = ("is_active",)

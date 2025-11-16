@@ -24,7 +24,7 @@ def extract_product_variations(request, product):
                 variations.append(variation)
             except Variation.DoesNotExist:
                 continue
-    return variations
+    return tuple(sorted(v.id for v in variations))
 
 
 # Create or get cart
@@ -54,7 +54,9 @@ def cart_item_exist(product, user, cart):
 def get_variation_map(cart_items):
     variation_map = {}
     for item in cart_items:
-        variation_ids = sorted(item.variations.values_list("id", flat=True))
+        variation_ids = sorted(
+            item.variations.values_list("id", flat=True)
+        )  # values_list returns a QuerySet of variation ids using flat=True to get a flat list
 
         variation_map[tuple(variation_ids)] = item.id
     return variation_map
@@ -67,21 +69,8 @@ def create_new_cart_item(product, user, cart, variations, quantity=1):
     cart_item = CartItem.objects.create(
         product=product, user=user_value, cart=cart, quantity=quantity
     )
-    product_variation = None
     if variations:
-        product_variation = variations
-
-    else:
-        first_color = product.variation_set.filter(
-            variation_category__iexact="color"
-        ).first()
-
-        first_size = product.variation_set.filter(
-            variation_category__iexact="size"
-        ).first()
-        default_variations = tuple([first_color.id, first_size.id])
-        product_variation = default_variations
-    cart_item.variations.set(product_variation)
+        cart_item.variations.set(variations)
     cart_item.save()
     logger.info(f"Created new cart item for product {product.id}")
     # return redirect("home")
@@ -93,10 +82,13 @@ def handle_existing_cart_item(product, user, cart, current_variations, quantity=
     cart_items = get_cart_items(user, cart)
     variation_map = get_variation_map(cart_items)
 
-    current_variation_ids = tuple(sorted(v.id for v in current_variations))
+    print(
+        "🐍 File: carts/utils.py | Line: 98 | handle_existing_cart_item ~ current_variation_ids",
+        current_variations,
+    )
 
-    if current_variation_ids in variation_map:
-        item_id = variation_map[current_variation_ids]
+    if current_variations in variation_map:
+        item_id = variation_map[current_variations]
         cart_item = CartItem.objects.get(id=item_id)
         cart_item.quantity += quantity
         cart_item.save()

@@ -3,6 +3,7 @@ import logging
 import math
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from alistyle.utils import get_session_key
 from carts.models import Cart, CartItem
@@ -44,13 +45,28 @@ def cart(request, total=0, quantity=0, cart_items=None):
 # add to cart
 def add_to_cart(request, product_id):
     current_path = request.META.get("HTTP_REFERER")
+    # raise Exception("Test exception for logging")
     try:
+        # throw a test exception
         product = Product.objects.get(pk=product_id)
         current_user = request.user
         cart = get_or_create_cart(request)
         quantity = int(request.POST.get("quantity", 1))
-        print("🐍 File: carts/views.py | Line: 53 | add_to_cart ~ quantity", quantity)
+        # get the product's default variations if no variations selected
+        first_color = product.variation_set.filter(
+            variation_category__iexact="color"
+        ).first()
+        first_size = product.variation_set.filter(
+            variation_category__iexact="size"
+        ).first()
+        if first_color and first_size:
+            default_variations = tuple([first_color.id, first_size.id])
+        else:
+            default_variations = tuple()
+        # extract selected variations from the request if any
         current_variations = extract_product_variations(request, product)
+        if not current_variations:
+            current_variations = default_variations
         if cart_item_exist(product, current_user, cart):
             handle_existing_cart_item(
                 product, current_user, cart, current_variations, quantity
@@ -59,7 +75,14 @@ def add_to_cart(request, product_id):
             create_new_cart_item(
                 product, current_user, cart, current_variations, quantity
             )
-        messages.success(request, f"{product.product_name} added to cart successfully!")
+        # messages.success(request, f"{product.product_name} added to cart successfully!")
+        # check if it's an ajax request
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+            print(" --------> AJAX request detected")
+            return JsonResponse(
+                {"message": f"{product.product_name} added to cart successfully!"},
+                status=200,
+            )
         # return redirect("cart")
         return redirect(current_path)
     except Exception as e:

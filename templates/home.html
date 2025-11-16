@@ -106,7 +106,7 @@
       <!-- sect-heading -->
       <div class="row">
         {% for product in popular_products %}
-          {% include "includes/product-card.html" with product=product %}
+          {% include "includes/product-card.html" with product=product badge_text="NEW" %}
         {% endfor %}
       </div>
     </div>
