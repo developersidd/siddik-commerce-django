@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django_countries import countries
 
 
 # Custom Account Manager
@@ -75,6 +76,14 @@ class Account(AbstractBaseUser):
 
 
 # User Profile model
+
+COUNTRY_CHOICES = tuple(countries)
+GENDER_CHOICE = [
+    ("male", "male"),
+    ("female", "female"),
+]
+
+
 class UserProfile(models.Model):
     # if related_name is not given, it will be userprofile by default
     user = models.OneToOneField(
@@ -83,9 +92,10 @@ class UserProfile(models.Model):
     address_line_1 = models.CharField(blank=True, max_length=100)
     address_line_2 = models.CharField(blank=True, max_length=100)
     avatar = models.ImageField(upload_to="avatars", blank=True)
+    gender = models.CharField(choices=GENDER_CHOICE, blank=True)
     city = models.CharField(max_length=30)
     state = models.CharField(max_length=30)
-    country = models.CharField(max_length=30)
+    country = models.CharField(choices=COUNTRY_CHOICES, blank=True)
 
     def __str__(self):
         return self.user.first_name

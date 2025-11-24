@@ -23,7 +23,7 @@
         <div class="row ">
             <aside class="col-md-3">
                 <form action="{% url "store" %}" method="get">
-                    <input type="hidden" name="layout" value="{{ layout }}">
+                    <input type="hidden" name="layout" value="{{ request.GET.layout }}">
                     <div class="card">
                         <article class="filter-group">
                             <header class="card-header">
@@ -77,15 +77,15 @@
                                                type="range"
                                                id="min_range"
                                                min="0"
-                                               max="10000"
+                                               max="{{ store_max_price }}"
                                                value="{{ min_price | default:'0' }}"
                                                step="100">
                                         <input style="top: -35px"
                                                type="range"
                                                id="max_range"
                                                min="0"
-                                               max="10000"
-                                               value="{{ max_price | default:'10000' }}"
+                                               max="{{ store_max_price }}"
+                                               value="{{ max_price | default:store_max_price }}"
                                                step="100">
                                     </div>
                                     <div class="form-row">
@@ -100,11 +100,11 @@
                                         </div>
                                         <div class="form-group text-right col-md-6">
                                             <label>Max</label>
-                                            <input value="{{ max_price | default:'10000' }}"
+                                            <input value="{{ max_price | default:store_max_price }}"
                                                    id="max_price"
                                                    name="max_price"
                                                    class="form-control"
-                                                   placeholder="৳1,0000"
+                                                   placeholder="৳{{ store_max_price }}"
                                                    type="number">
                                         </div>
                                     </div>
@@ -147,20 +147,14 @@
             <main class="col-md-9">
                 <header class="border-bottom mb-4 pb-3">
                     <div class="form-inline">
-                        <span class="mr-md-auto">{{ products|length }} Items found</span>
+                        <span class="mr-md-auto">{{ products.paginator.count }} Items found</span>
                         <select name="sort_by" id="sort_by" class="mr-2 form-control">
-                            <option value="latest_items"
-                                    {% if request.GET.sort_by == "latest_items" %}selected{% endif %}>
-                                Latest items
-                            </option>
-                            <option value="trending"
-                                    {% if request.GET.sort_by == "trending" %}selected{% endif %}>Trending</option>
-                            <option value="most_popular"
-                                    {% if request.GET.sort_by == "most_popular" %}selected{% endif %}>
-                                Most Popular
-                            </option>
-                            <option value="cheapest"
-                                    {% if request.GET.sort_by == "cheapest" %}selected{% endif %}>Cheapest</option>
+                            {% for k, v in sort_options.items %}
+                                <option value="{{ k }}"
+                                        {% if sort_by == k %}selected{% endif %}>
+                                    {{ v.0 }}
+                                </option>
+                            {% endfor %}
                         </select>
                         <div class="btn-group">
                             <button class="btn btn-outline-secondary layout-btn {% if request.GET.layout == "list" %}active{% endif %}"
@@ -189,6 +183,50 @@
                         {% endif %}
                     {% endfor %}
                 </div>
+                {% comment %}  Pagination {% endcomment %}
+                <nav class="mt-4" aria-label="Page navigation sample">
+                    <ul class="pagination">
+                        {% if products.has_previous %}
+                            <li class="page-item">
+                                <button data-page-num="{{ products.previous_page_number }}"
+                                        class="page-btn page-link">Previous</button>
+                            </li>
+                            {% comment %}  first page {% endcomment %}
+                            <li class="page-item">
+                                <button data-page-num="1" class="page-btn page-link">First</button>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <button class="page-link" disabled>Previous</button>
+                            </li>
+                        {% endif %}
+                        {% for i in products.paginator.page_range %}
+                            {% if products.number == i %}
+                                <li class="page-item active">
+                                    <button data-page-num="{{ i }}" class="page-btn page-link">{{ i }}</button>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <button data-page-num="{{ i }}" class="page-btn page-link page_num_btn">{{ i }}</button>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if products.has_next %}
+                            <li class="page-item">
+                                <button id="next_page_btn" class="page-btn page-link">Next</button>
+                            </li>
+                            <li class="page-item">
+                                <button data-page-num="{{ products.paginator.num_pages }}"
+                                        id="last_page_btn"
+                                        class="page-btn page-link">Last</button>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <button class="page-link" disabled>Next</button>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </main>
         </div>
     </div>

@@ -1,4 +1,6 @@
+from django.conf.locale import el
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 
 from store.forms import ReviewForm
@@ -9,14 +11,30 @@ from store.models import Product, ProductGallery, ReviewRating, Variation
 def store(request, category_slug=None):
     category_slugs = request.GET.getlist("category_slug") or None
     sizes = request.GET.getlist("size") or None
+    store_max_price = "1000000"
     min_price = request.GET.get("min_price", "0")
-    max_price = request.GET.get("max_price", "100000")
-    layout = request.GET.get("layout", "grid")
+    max_price = request.GET.get("max_price", store_max_price)
     sort_by = request.GET.get("sort_by", "latest_items")
+    page = request.GET.get("page", 1)
+    limit = request.GET.get("limit", 6)
+    SORT_OPTIONS = {
+        "title": ("Title", "-product_name"),
+        "latest_items": ("Latest Items", "-created_at"),
+        "cheapest": ("Cheapest", "price"),
+        "most_popular": ("Most Popular", "-purchase_count"),
+        "highest_rated": ("Highest Rated", "-reviewrating__rating"),
+        "expensive": ("Expensive", "-price"),
+        "oldest_items": ("Oldest Items", "created_at"),
+        "trending": ("Trending", "-view_count"),
+    }
+
+    if sort_by not in SORT_OPTIONS:
+        sort_by = "latest_items"
     try:
         min_price_int = int(min_price)
         max_price_int = int(max_price)
     except ValueError:
+        # if conversion fails, set default values
         min_price_int = 0
         max_price_int = 100000
 
@@ -33,12 +51,20 @@ def store(request, category_slug=None):
     # Apply price filter
     products = products.filter(price__gte=min_price_int, price__lte=max_price_int)
 
+    # Apply sorting
+    sort_field = SORT_OPTIONS[sort_by][1]
+    products = products.order_by(sort_field)
+
     # Apply size filter
     if sizes and len(sizes) > 0:
         products = products.filter(
             variations__variation_category="size",
             variations__variation_value__in=sizes,
         ).distinct()
+
+    # Apply Pagination
+    paginator = Paginator(products, int(limit))
+    products = paginator.get_page(page)
 
     # Get available sizes from variations
     available_sizes = (
@@ -50,10 +76,6 @@ def store(request, category_slug=None):
         .order_by("variation_value")
     )
 
-    #query_dict = request.GET.copy()
-    #query_dict.pop("layout", None)
-    #query_string_without_layout = query_dict.urlencode()
-
     context = {
         "products": products,
         "available_sizes": available_sizes,
@@ -61,6 +83,9 @@ def store(request, category_slug=None):
         "selected_sizes": sizes,
         "min_price": min_price,
         "max_price": max_price,
+        "sort_by": sort_by,
+        "sort_options": SORT_OPTIONS,
+        "store_max_price": store_max_price,
     }
     return render(request, "store/store.html", context=context)
 

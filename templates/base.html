@@ -7,7 +7,10 @@
             <meta http-equiv="cache-control" content="max-age=604800" />
             <meta name="viewport"
                   content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-            <title>Website title - bootstrap alistyle html template</title>
+            <title>
+                  {% block title %}
+                  {% endblock title %}
+            </title>
             <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
             <!-- CSS Files -->
             <link href="{% static 'css/bootstrap.css' %}"
@@ -35,7 +38,8 @@
             {% comment %}<!--  header -->{% endcomment %}
             {% include "includes/header.html" %}
             <main class="">
-                  {% block content %}{% endblock %}
+                  {% block content %}
+                  {% endblock content %}
                   <!-- ========================= FOOTER ========================= -->
             </main>
             {% include "includes/footer.html" %}
