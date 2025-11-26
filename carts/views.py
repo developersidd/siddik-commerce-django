@@ -75,7 +75,7 @@ def add_to_cart(request, product_id):
             create_new_cart_item(
                 product, current_user, cart, current_variations, quantity
             )
-        # messages.success(request, f"{product.product_name} added to cart successfully!")
+        messages.success(request, f"{product.product_name} added to cart successfully!")
         # check if it's an ajax request
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
             print(" --------> AJAX request detected")

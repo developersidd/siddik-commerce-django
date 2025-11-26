@@ -38,7 +38,9 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2 col-4">
                             <a href="{% url "home" %}" class="brand-wrap">
-                                <img class="logo" src="{% static './images/logo.png' %}" alt="Siddik Commerce  Logo">
+                                <img class="logo"
+                                     src="{% static './images/logo.png' %}"
+                                     alt="Siddik Commerce  Logo">
                             </a> <!-- brand-wrap.// -->
                         </div>
                         <div class="col-lg-6 col-sm-12">
@@ -66,8 +68,8 @@
                                     <div class="text">
                                         <span class="text-muted">Welcome!</span>
                                         <div>
-                                            <a href="#">Sign in</a> |
-                                            <a href="#">Register</a>
+                                            <a href="{% url 'login' %}">Sign in</a> |
+                                            <a href="{% url 'register' %}">Register</a>
                                         </div>
                                     </div>
                                 </div>
@@ -82,6 +84,7 @@
             </section>
             <!-- header-main .// -->
         </header>
+        {% comment %}{% include 'includes/alerts.html' %}{% endcomment %}
         <!-- section-header.// -->
         <main class="">
             {% block content %}

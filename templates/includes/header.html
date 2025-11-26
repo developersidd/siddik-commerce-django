@@ -58,13 +58,31 @@
               <span class="badge badge-pill badge-danger notify">0</span>
             </div>
             <div class="widget-header icontext">
-              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+              {% if request.user.user_profile.avatar %}
+                <img src="{{ request.user.user_profile.avatar.url }}"
+                     alt="{{ request.user.username }}"
+                     class="icon icon-sm rounded-circle border" />
+              {% else %}
+                <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+              {% endif %}
               <div class="text">
-                <span class="text-muted">Welcome!</span>
-                <div>
-                  <a href="#">Sign in</a> |
-                  <a href="{% url 'register' %}">Register</a>
-                </div>
+                <span class="text-muted">
+                  {% if request.user.username %}
+                    {{ request.user.username }}
+                  {% else %}
+                    Welcome Guest
+                    {% endif %}
+                  </span>
+                {% if request.user.is_authenticated %}
+                  <div>
+                    <a href="{% url 'logout' %}">Logout</a>
+                  </div>
+                {% else %}
+                  <div>
+                    <a href="{% url 'login' %}">Sign in</a> |
+                    <a href="{% url 'register' %}">Register</a>
+                  </div>
+                {% endif %}
               </div>
             </div>
           </div>

@@ -178,7 +178,6 @@
                     {% endif %}
                 </div>
             </form>
-            {% comment %}{% include 'includes/alerts.html' %}{% endcomment %}
             <header class="section-heading">
                 <h3>Customer Reviews</h3>
                 <div class="rating-wrap">
@@ -199,13 +198,13 @@
                                     <li class="rating-star">
                                         <i class="fa fa-star{% if review.rating < 0.5 %}-o{% elif review.rating < 1 %}-half-o{% endif %}"
                                            aria-hidden="true"></i>
-                                        <i class="fa fa-star{% if review.rating < 1 %}-o{% elif review.rating < 2 %}-half-o{% endif %}"
+                                        <i class="fa fa-star{% if review.rating < 1.5 %}-o{% elif review.rating < 2 %}-half-o{% endif %}"
                                            aria-hidden="true"></i>
-                                        <i class="fa fa-star{% if review.rating < 2 %}-o{% elif review.rating < 3 %}-half-o{% endif %}"
+                                        <i class="fa fa-star{% if review.rating < 2.5 %}-o{% elif review.rating < 3 %}-half-o{% endif %}"
                                            aria-hidden="true"></i>
-                                        <i class="fa fa-star{% if review.rating < 3 %}-o{% elif review.rating < 4 %}-half-o{% endif %}"
+                                        <i class="fa fa-star{% if review.rating < 3.5 %}-o{% elif review.rating < 4 %}-half-o{% endif %}"
                                            aria-hidden="true"></i>
-                                        <i class="fa fa-star{% if review.rating < 4 %}-o{% elif review.rating < 5 %}-half-o{% endif %}"
+                                        <i class="fa fa-star{% if review.rating < 4.5 %}-o{% elif review.rating < 5 %}-half-o{% endif %}"
                                            aria-hidden="true"></i>
                                     </li>
                                 </ul>

@@ -1,29 +1,28 @@
 {% if messages %}
     {% for message in messages %}
         <div id="message"
-             class="container pr-2"
-             style="position: fixed;
-                    bottom: 30px;
-                    right: 5px;
-                    z-index: 1050;
-                    width: 550px">
-            <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}
-                 role="alert">
-                <button type="button" class="close" data-dismiss="alert">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error:{% endif %}
-                {{ message }}
-            </div>
+             class="custom-toast {% if message.tags %}{{ message.tags }}{% endif %}">
+            <span class="toast-icon">
+                {% if message.tags == 'success' %}
+                    ✓
+                {% else %}
+                    ✕
+                {% endif %}
+            </span>
+            <span class="toast-message">{{ message }}</span>
+            <button type="button"
+                    class="toast-close"
+                    onclick="this.parentElement.remove()">×</button>
         </div>
         <script>
-            // Auto-dismiss the alert after 5 seconds
-            setTimeout(function() {
-                let alertElement = document.getElementById('message');
-                if (alertElement) {
-                    alertElement.style.visibility = 'hidden';
-                }
-            }, 5000);
+    // Auto-dismiss the alert after 5 seconds
+    setTimeout(function() {
+        let alertElement = document.getElementById('message');
+        if (alertElement) {
+            alertElement.style.animation = 'slideOut 0.3s ease-out';
+            setTimeout(() => alertElement.remove(), 300);
+        }
+    }, 5000);
         </script>
     {% endfor %}
 {% endif %}
