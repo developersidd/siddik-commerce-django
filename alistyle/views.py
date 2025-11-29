@@ -2,6 +2,7 @@ from datetime import datetime
 from django.shortcuts import render
 from django.utils import timezone
 
+from carts.utils import get_cart_items, get_or_create_cart
 from store.models import Campaign, FlashSale, FlashSaleCategory, Product
 
 
@@ -44,6 +45,9 @@ def home(request):
     #        discount_percent__gt=0, discount_start__lte=today, discount_end__gte=today
     #    )
     #
+    # cart = get_or_create_cart(request)
+    # cart_items = get_cart_items(request.user, cart)
+    # print("🐍 File: alistyle/views.py | Line: 50 | home ~ cart_items",cart_items)
     context = {
         "flash_sale": (
             {

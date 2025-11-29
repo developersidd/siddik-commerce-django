@@ -2,7 +2,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -11,6 +11,15 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from accounts.decorators import unauthenticated_user
 from accounts.forms import RegistrationForm
 from accounts.models import Account, UserProfile
+from carts.utils import (
+    cart_item_exist,
+    extract_product_variations,
+    get_cart_items,
+    get_or_create_cart,
+    get_variation_map,
+    handle_existing_cart_item,
+    handle_existing_cart_items,
+)
 
 # Create your views here.
 
@@ -56,7 +65,7 @@ def register(request):
 
             # send email for account activation
             current_site = get_current_site(request)
-            mail_subject = "Pleas active your account"
+            mail_subject = "Please active your account"
             message = render_to_string(
                 "accounts/account_verification_email.html",
                 {
@@ -66,6 +75,7 @@ def register(request):
                     "token": default_token_generator.make_token(
                         user
                     ),  # one time use token
+                    "brand_name": "Siddik Commerce",
                 },
             )
             to_email = email
@@ -80,17 +90,42 @@ def register(request):
     return render(request, "accounts/register.html", context)
 
 
+def email_template(request):
+    user = request.user
+    current_site = get_current_site(request)
+    mail_subject = "Please active your account"
+    message = render_to_string(
+        "accounts/account_verification_email.html",
+        {
+            "user": user,
+            "domain": current_site,
+            "uid": user.pk,
+            "token": default_token_generator.make_token(user),  # one time use token
+            "brand_name": "Siddik Commerce",
+        },
+    )
+
+    to_email = "siddik.prgmr@gmail.com"
+    send_email = EmailMessage(mail_subject, message, to=[to_email])
+    send_email.content_subtype = "html"
+    send_email.send()
+    return redirect("home")
+
+
 # @unauthenticated_user
 def login(request):
     if request.method == "POST":
         email = request.POST.get("email")
-        print("🐍 File: accounts/views.py | Line: 87 | login ~ email", email)
         password = request.POST.get("password")
 
         # check if user exist
+        cart = get_or_create_cart(request)
+        new_cartitems = get_cart_items(request.user, cart)
         user = auth.authenticate(request, email=email, password=password)
+
         if user != None:
             auth.login(request, user)
+            handle_existing_cart_items(new_cartitems, user)
             messages.success(request, f"You are logged In")
             return redirect("home")
         else:
@@ -116,11 +151,11 @@ def activate_account(request, uidb64, token):
         return redirect("register")
 
 
-@login_required(login_url="login")
+# @login_required(login_url="login")
 def logout(request):
     try:
         auth.logout(request)
-        messages.success("You are logged out successfully!")
+        messages.success(request, "You are logged out successfully!")
         return redirect("login")
     except Exception as e:
-        messages.error("Oops! There was as error occurred")
+        messages.error(request, "Oops! There was as error occurred")

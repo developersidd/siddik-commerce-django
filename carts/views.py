@@ -60,7 +60,7 @@ def add_to_cart(request, product_id):
             variation_category__iexact="size"
         ).first()
         if first_color and first_size:
-            default_variations = tuple([first_color.id, first_size.id])
+            default_variations = tuple(sorted([first_color.id, first_size.id]))
         else:
             default_variations = tuple()
         # extract selected variations from the request if any
