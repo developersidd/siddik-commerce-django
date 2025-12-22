@@ -1,6 +1,6 @@
-from calendar import c
 import logging
 import math
+from django.conf.locale import ta
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -15,6 +15,7 @@ from carts.utils import (
     get_or_create_cart,
     handle_existing_cart_item,
 )
+from coupon.models import Coupon, CouponUsage
 from store.models import Product
 
 
@@ -22,24 +23,44 @@ from store.models import Product
 def cart(request, total=0, quantity=0, cart_items=None):
     tax = 0
     grand_total = 0
-    session_key = get_session_key(request)
+    coupon_discount_amount = 0
     try:
         current_user = request.user
         cart = get_or_create_cart(request)
         cart_items = get_cart_items(current_user, cart)
-        total = sum(item.sub_total() for item in cart_items)
-        quantity = sum(item.quantity for item in cart_items)
+        coupon_usage_id = request.session.get("coupon_usage_id")
+        coupon_usage = None
+        for item in cart_items:
+            total += item.product.final_price()
+            quantity += item.quantity
+        if coupon_usage_id:
+          coupon_usage = CouponUsage.objects.filter(
+                user=current_user, id=coupon_usage_id
+            ).first()
+        else:
+            coupon_usage = CouponUsage.objects.filter(user=current_user, is_used=False).order_by("-used_at").first()
+        print("🐍 File: carts/views.py | Line: 39 | cart ~ coupon_usage",coupon_usage)
+        if coupon_usage:
+            total -= coupon_usage.discount_amount
+            coupon_discount_amount = coupon_usage.discount_amount
         tax = math.ceil((2 * total) / 100)
-    except ObjectDoesNotExist:
-        logging.log("Error occurred while getting cart details")
+        grand_total = total + tax
+
+    except Exception as e:
+        print("🐍 File: carts/views.py | Line: 48 | cart ~ e",e)
+        # logging.log("Error occurred while getting cart details")
+        pass
     context = {
         "total": total,
         "cart_items": cart_items,
         "grand_total": total + tax,
         "quantity": quantity,
+        "discount": coupon_discount_amount,
+        "applied_coupon_code": coupon_usage.coupon.coupon_code,
         "tax": tax,
+        "grand_total": grand_total,
     }
-    return redirect("home")
+    return render(request, "store/cart.html", context)
 
 
 # add to cart
@@ -100,7 +121,7 @@ def decrease_cart_item(request, product_id, cart_item_id):
             cart_item.save()
         else:
             cart_item.delete()
-            return redirect("home")
+        return redirect("cart")
     except Exception as e:
         logging.log("Error occurred while decresing cart quantity")
 
@@ -111,7 +132,7 @@ def remove_cart_item(request, product_id, cart_item_id):
         product = get_object_or_404(Product, id=product_id)
         cart_item = CartItem.objects.get(pk=cart_item_id, product=product)
         cart_item.delete()
-        return redirect("home")
+        return redirect("cart")
     except Exception as e:
         logging.error(
             f"There was an error occurred while deleting cart item with Id: {cart_item_id}"

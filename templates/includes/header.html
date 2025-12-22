@@ -10,10 +10,10 @@
           <a class="nav-link" href="#">Delivery</a>
         </li>
         {% comment %} make a form for email template   {% endcomment %}
-        <form action="{% url "email_template" %}" method="post">
+        {% comment %}<form action="{% url "email_template" %}" method="post">
           {% csrf_token %}
           <button type="submit">Email Template</button>
-        </form>
+        </form>{% endcomment %}
         <li class="nav-item">
           <a class="nav-link" href="#">Payment</a>
         </li>
@@ -59,8 +59,8 @@
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="widgets-wrap float-lg-right">
             <div class="widget-header mr-3">
-              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-              <span class="badge badge-pill badge-danger notify">0</span>
+              <a href="{% url "cart" %}" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
             </div>
             <div class="widget-header icontext">
               {% if request.user.user_profile.avatar %}
@@ -113,15 +113,14 @@
           <a class="nav-link pl-0" data-toggle="dropdown" href="#"><strong><i class="fa fa-bars"></i> &nbsp; All category</strong></a>
           <div class="dropdown-menu">
             {% for category in links %}
-              <a class="dropdown-item" href="#">{{ category.category_name }}
-                {% comment %}<span class="badge badge-pill badge-primary">{{ category.product_count }}</span>{% endcomment %}
+              <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}
               </a>
             {% endfor %}
           </div>
         </li>
         {% for category in links|slice:":7" %}
           <li class="nav-item">
-            <a class="nav-link text-capitalize" href="#">{{ category.category_name }}</a>
+            <a class="nav-link text-capitalize" href="{{ category.get_url }}">{{ category.category_name }}</a>
           </li>
         {% endfor %}
       </ul>

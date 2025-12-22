@@ -60,17 +60,35 @@
                         <div class="col-lg-4 col-sm-6 col-12">
                             <div class="widgets-wrap float-md-right">
                                 <div class="widget-header  mr-3">
-                                    <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-                                    <span class="badge badge-pill badge-danger notify">0</span>
+                                    <a href="{% url "cart" %}" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+                                    <span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
                                 </div>
                                 <div class="widget-header icontext">
-                                    <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+                                    {% if request.user.user_profile.avatar %}
+                                        <img src="{{ request.user.user_profile.avatar.url }}"
+                                             alt="{{ request.user.username }}"
+                                             class="icon icon-sm rounded-circle border" />
+                                    {% else %}
+                                        <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+                                    {% endif %}
                                     <div class="text">
-                                        <span class="text-muted">Welcome!</span>
-                                        <div>
-                                            <a href="{% url 'login' %}">Sign in</a> |
-                                            <a href="{% url 'register' %}">Register</a>
-                                        </div>
+                                        <span class="text-muted">
+                                            {% if request.user.username %}
+                                                {{ request.user.username }}
+                                            {% else %}
+                                                Welcome Guest
+                                            {% endif %}
+                                        </span>
+                                        {% if request.user.is_authenticated %}
+                                            <div>
+                                                <a href="{% url 'logout' %}">Logout</a>
+                                            </div>
+                                        {% else %}
+                                            <div>
+                                                <a href="{% url 'login' %}">Sign in</a> |
+                                                <a href="{% url 'register' %}">Register</a>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -86,6 +104,7 @@
         </header>
         {% comment %}{% include 'includes/alerts.html' %}{% endcomment %}
         <!-- section-header.// -->
+        {% include "includes/alerts.html" %}
         <main class="">
             {% block content %}
             {% endblock content %}

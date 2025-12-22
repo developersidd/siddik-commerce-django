@@ -32,24 +32,24 @@ def extract_product_variations(request, product):
 # Create or get cart
 def get_or_create_cart(request):
     cart, created = Cart.objects.get_or_create(cart_id=get_session_key(request))
-    print(
-        "🐍 File: carts/utils.py | Line: 36 | get_or_create_cart ~ get_session_key(request)",
-        get_session_key(request),
-    )
+    #print(
+    #    "🐍 File: carts/utils.py | Line: 36 | get_or_create_cart ~ get_session_key(request)",
+    #    get_session_key(request),
+    #)
     return cart
 
 
 # Get cart items
 def get_cart_items(user, cart):
-    print("🐍 File: carts/utils.py | Line: 41 | undefined ~ cart", cart)
-    print("🐍 File: carts/utils.py | Line: 41 | get_cart_items ~ user", user)
+    #print("🐍 File: carts/utils.py | Line: 41 | undefined ~ cart", cart)
+    #print("🐍 File: carts/utils.py | Line: 41 | get_cart_items ~ user", user)
 
     if user.is_authenticated:
         cart_items = CartItem.objects.filter(user=user)
-        print(
-            "🐍 File: carts/utils.py | Line: 43 | get_cart_items ~ cart_items",
-            cart_items,
-        )
+        #print(
+        #    "🐍 File: carts/utils.py | Line: 43 | get_cart_items ~ cart_items",
+        #    cart_items,
+        #)
     else:
         cart_items = CartItem.objects.filter(cart=cart)
     return cart_items
@@ -61,7 +61,6 @@ def cart_item_exist(product, user, cart):
         return CartItem.objects.filter(product=product, user=user).exists()
     else:
         return CartItem.objects.filter(product=product, cart=cart).exists()
-
 
 # get existed product variation map
 def get_variation_map(cart_items):
@@ -91,10 +90,10 @@ def create_new_cart_item(product, user, cart, variations, quantity=1):
 
 # Check if product in cart item exist otherwise create new cart item
 def handle_existing_cart_item(product, user, cart, current_variations, quantity=1):
-    print(
-        "🐍 File: carts/utils.py | Line: 94 | undefined ~ current_variations",
-        current_variations,
-    )
+    #print(
+    #    "🐍 File: carts/utils.py | Line: 94 | undefined ~ current_variations",
+    #    current_variations,
+    #)
 
     cart_items = get_cart_items(user, cart)
     variation_map = get_variation_map(cart_items)
@@ -108,13 +107,13 @@ def handle_existing_cart_item(product, user, cart, current_variations, quantity=
     if cart_item:
         cart_item.quantity += quantity
         cart_item.save()
-        print(
-            f"!!Increment quantity for cart item",
-            "cart_item",
-            cart_item,
-            "product",
-            product,
-        )
+        #print(
+        #    f"!!Increment quantity for cart item",
+        #    "cart_item",
+        #    cart_item,
+        #    "product",
+        #    product,
+        #)
     # return redirect("home")
     else:
         create_new_cart_item(product, user, cart, current_variations, quantity)

@@ -89,6 +89,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         Account, on_delete=models.CASCADE, related_name="user_profile"
     )
+    
     address_line_1 = models.CharField(blank=True, max_length=100)
     address_line_2 = models.CharField(blank=True, max_length=100)
     avatar = models.ImageField(upload_to="avatars", blank=True)

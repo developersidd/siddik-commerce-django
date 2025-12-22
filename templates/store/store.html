@@ -184,6 +184,7 @@
                     {% endfor %}
                 </div>
                 {% comment %}  Pagination {% endcomment %}
+                {% if products|length > 0 %}
                 <nav class="mt-4" aria-label="Page navigation sample">
                     <ul class="pagination">
                         {% if products.has_previous %}
@@ -227,6 +228,7 @@
                         {% endif %}
                     </ul>
                 </nav>
+                {% endif %}
             </main>
         </div>
     </div>

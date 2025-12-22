@@ -271,7 +271,7 @@ class ProductView(models.Model):
     class Meta:
         ordering = ["-viewed_at"]
         indexes = [
-            models.Index(fields=["session_key", "-viewed_at", "session_key"]),
+            models.Index(fields=["-viewed_at", "session_key"]),
         ]
 
 
@@ -340,8 +340,6 @@ class ProductGallery(models.Model):
 
 
 # Banner Slider Model
-
-
 class BannerSlider(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to="store/banners")
@@ -353,3 +351,5 @@ class BannerSlider(models.Model):
 
     def __str__(self):
         return self.title
+
+
