@@ -4,7 +4,14 @@
     {% comment %} Breadcrumb {% endcomment %}
     <section class="section-pagetop bg">
         <div class="container">
-            <h2 class="title-page">Category products</h2>
+            <h2 class="title-page">
+                {% if request.GET.category_slug %}
+                    Category
+                {% else %}
+                    Store
+                {% endif %}
+                products
+            </h2>
             <nav>
                 <ol class="breadcrumb text-white">
                     <li class="breadcrumb-item">
@@ -13,14 +20,22 @@
                     <li class="breadcrumb-item">
                         <a href="{% url 'store' %}">Store</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Great articles</li>
+                    {% if category_slugs %}
+                        {% comment %} get all the category_slug {% endcomment %}
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {% for category_slug in category_slugs %}
+                            <span>
+                                {{ category_slug|capfirst }}{% if not forloop.last %}, {% endif %}</span>
+                                {% endfor %}
+                        </li>
+                    {% endif %}
                 </ol>
             </nav>
         </div>
         <!-- container //  -->
     </section>
     <div class="container my-4 py-4">
-        <div class="row ">
+        <div class="row">
             <aside class="col-md-3">
                 <form action="{% url "store" %}" method="get">
                     <input type="hidden" name="layout" value="{{ request.GET.layout }}">
@@ -150,10 +165,7 @@
                         <span class="mr-md-auto">{{ products.paginator.count }} Items found</span>
                         <select name="sort_by" id="sort_by" class="mr-2 form-control">
                             {% for k, v in sort_options.items %}
-                                <option value="{{ k }}"
-                                        {% if sort_by == k %}selected{% endif %}>
-                                    {{ v.0 }}
-                                </option>
+                                <option value="{{ k }}" {% if sort_by == k %}selected{% endif %}>{{ v.0 }}</option>
                             {% endfor %}
                         </select>
                         <div class="btn-group">
@@ -174,60 +186,63 @@
                     {% comment %}</form>{% endcomment %}
                 </header>
                 <!-- sect-heading -->
-                <div class="row">
-                    {% for product in products %}
-                        {% if request.GET.layout == "list" %}
+                 <section style="min-height: 560px;">
+
+                     <div class="row">
+                         {% for product in products %}
+                         {% if request.GET.layout == "list" %}
                             {% include "includes/product-large-card.html" with product=product %}
                         {% else %}
-                            {% include "includes/product-card.html" with product=product column_width=4 %}
+                        {% include "includes/product-card.html" with product=product column_width=4 %}
                         {% endif %}
-                    {% endfor %}
-                </div>
+                        {% endfor %}
+                    </div>
+                </section>
                 {% comment %}  Pagination {% endcomment %}
                 {% if products|length > 0 %}
-                <nav class="mt-4" aria-label="Page navigation sample">
-                    <ul class="pagination">
-                        {% if products.has_previous %}
-                            <li class="page-item">
-                                <button data-page-num="{{ products.previous_page_number }}"
-                                        class="page-btn page-link">Previous</button>
-                            </li>
-                            {% comment %}  first page {% endcomment %}
-                            <li class="page-item">
-                                <button data-page-num="1" class="page-btn page-link">First</button>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <button class="page-link" disabled>Previous</button>
-                            </li>
-                        {% endif %}
-                        {% for i in products.paginator.page_range %}
-                            {% if products.number == i %}
-                                <li class="page-item active">
-                                    <button data-page-num="{{ i }}" class="page-btn page-link">{{ i }}</button>
+                    <nav class="mt-4" aria-label="Page navigation sample">
+                        <ul class="pagination">
+                            {% if products.has_previous %}
+                                <li class="page-item">
+                                    <button data-page-num="{{ products.previous_page_number }}"
+                                            class="page-btn page-link">Previous</button>
+                                </li>
+                                {% comment %}  first page {% endcomment %}
+                                <li class="page-item">
+                                    <button data-page-num="1" class="page-btn page-link">First</button>
                                 </li>
                             {% else %}
-                                <li class="page-item">
-                                    <button data-page-num="{{ i }}" class="page-btn page-link page_num_btn">{{ i }}</button>
+                                <li class="page-item disabled">
+                                    <button class="page-link" disabled>Previous</button>
                                 </li>
                             {% endif %}
-                        {% endfor %}
-                        {% if products.has_next %}
-                            <li class="page-item">
-                                <button id="next_page_btn" class="page-btn page-link">Next</button>
-                            </li>
-                            <li class="page-item">
-                                <button data-page-num="{{ products.paginator.num_pages }}"
-                                        id="last_page_btn"
-                                        class="page-btn page-link">Last</button>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <button class="page-link" disabled>Next</button>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>
+                            {% for i in products.paginator.page_range %}
+                                {% if products.number == i %}
+                                    <li class="page-item active">
+                                        <button data-page-num="{{ i }}" class="page-btn page-link">{{ i }}</button>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <button data-page-num="{{ i }}" class="page-btn page-link page_num_btn">{{ i }}</button>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if products.has_next %}
+                                <li class="page-item">
+                                    <button id="next_page_btn" class="page-btn page-link">Next</button>
+                                </li>
+                                <li class="page-item">
+                                    <button data-page-num="{{ products.paginator.num_pages }}"
+                                            id="last_page_btn"
+                                            class="page-btn page-link">Last</button>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <button class="page-link" disabled>Next</button>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                 {% endif %}
             </main>
         </div>

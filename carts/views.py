@@ -33,12 +33,13 @@ def cart(request, total=0, quantity=0, cart_items=None):
         for item in cart_items:
             total += item.product.final_price() * item.quantity
             quantity += item.quantity
-        if coupon_usage_id:
-            coupon_usage = CouponUsage.objects.filter(
-                user=current_user, id=coupon_usage_id
-            ).first()
-        else:
-            coupon_usage = (
+        if  current_user.is_authenticated:
+            if coupon_usage_id:
+                coupon_usage = CouponUsage.objects.filter(
+                    user=current_user, id=coupon_usage_id
+                ).first()
+            else:
+                coupon_usage = (
                 CouponUsage.objects.filter(user=current_user, is_used=False)
                 .order_by("-used_at")
                 .first()
@@ -46,9 +47,9 @@ def cart(request, total=0, quantity=0, cart_items=None):
         if coupon_usage and total > coupon_usage.discount_amount:
             coupon_discount_amount = coupon_usage.discount_amount
         tax = math.ceil((2 * total) / 100)
-        grand_total = (total + tax)
+        grand_total = total + tax
         if coupon_discount_amount < total:
-            grand_total -= coupon_discount_amount 
+            grand_total -= coupon_discount_amount
 
     except Exception as e:
         print("🐍 File: carts/views.py | Line: 48 | cart ~ e", e)
@@ -60,7 +61,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         "grand_total": total + tax,
         "quantity": quantity,
         "discount": coupon_discount_amount,
-        "applied_coupon_code": coupon_usage.coupon.coupon_code,
+        "applied_coupon_code": coupon_usage.coupon.coupon_code if coupon_usage is not None else "",
         "tax": tax,
         "grand_total": grand_total,
     }
@@ -92,9 +93,12 @@ def add_to_cart(request, product_id):
         current_variations = extract_product_variations(request, product)
         if not current_variations:
             current_variations = default_variations
-            
+
         if cart_item_exist(product, current_user, cart):
-            print("🐍 File: carts/views.py | Line: 95 | add_to_cart ~ cart_item_exist",cart_item_exist)
+            print(
+                "🐍 File: carts/views.py | Line: 95 | add_to_cart ~ cart_item_exist",
+                cart_item_exist,
+            )
             handle_existing_cart_item(
                 product, current_user, cart, current_variations, quantity
             )
@@ -121,9 +125,15 @@ def add_to_cart(request, product_id):
 def decrease_cart_item(request, product_id, cart_item_id):
     try:
         product = Product.objects.get(id=product_id)
-        print("🐍 File: carts/views.py | Line: 122 | decrease_cart_item ~ product",product)
+        print(
+            "🐍 File: carts/views.py | Line: 122 | decrease_cart_item ~ product",
+            product,
+        )
         cart_item = CartItem.objects.get(id=cart_item_id, product=product)
-        print("🐍 File: carts/views.py | Line: 124 | decrease_cart_item ~ cart_item",cart_item)
+        print(
+            "🐍 File: carts/views.py | Line: 124 | decrease_cart_item ~ cart_item",
+            cart_item,
+        )
         if cart_item.quantity > 1:
             cart_item.quantity -= 1
             cart_item.save()
@@ -131,7 +141,7 @@ def decrease_cart_item(request, product_id, cart_item_id):
             cart_item.delete()
         return redirect("cart")
     except Exception as e:
-        print("🐍 File: carts/views.py | Line: 132 | decrease_cart_item ~ e",e)
+        print("🐍 File: carts/views.py | Line: 132 | decrease_cart_item ~ e", e)
         logging.log("Error occurred while decresing cart quantity")
         return redirect("home")
 
@@ -148,3 +158,16 @@ def remove_cart_item(request, product_id, cart_item_id):
             f"There was an error occurred while deleting cart item with Id: {cart_item_id}"
         )
         return None
+
+
+# Checkout
+def checkout(request):
+    try:
+        current_user = request.user
+        cart = get_or_create_cart(request)
+        cart_items = get_cart_items(current_user, cart)
+
+        context = {"cart_items": cart_items}
+        return render(request, "store/checkout.html", context)
+    except Exception as e:
+        print("🐍 File: carts/views.py | Line: 165 | checkout ~ e", e)

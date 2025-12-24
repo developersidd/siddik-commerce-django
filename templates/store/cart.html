@@ -7,191 +7,199 @@
         </div>
         <!-- container //  -->
     </section>
-    <section class="section-content padding-y">
-        <div class="container">
-            <div class="row">
-                <main class="col-md-9">
-                    <div class="card">
-                        <table class="table table-borderless table-shopping-cart">
-                            <thead class="text-muted">
-                                <tr class="small text-uppercase">
-                                    <th scope="col">Product</th>
-                                    <th scope="col" width="120">Quantity</th>
-                                    <th scope="col" width="120">Price</th>
-                                    <th scope="col" class="text-right" width="200"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in cart_items %}
-                                    <tr>
-                                        <td>
-                                            <figure class="itemside">
-                                                <div class="aside">
-                                                    <img src="{{ item.product.images.url }}"
-                                                         class="img-sm"
-                                                         alt="{{ item.product.product_name }}">
-                                                </div>
-                                                <figcaption class="info mt-2">
-                        <a href="{{ item.product.get_url }}" class="title text-dark">{{ item.product.product_name }}</a>
-                        <p class="text-muted small">
-                            {% for v in item.variations.all %}
-                            <span>{{ v.variation_category|capfirst }}</span>: {{ v.variation_value|capfirst }}
-                            {% endfor %}
-                        </p>
-                                                </figcaption>
-                                            </figure>
-                                        </td>
-                                        <td>
-                                            <div class="form-group col-md flex-grow-0">
-                                                <div class="input-group mb-3 input-spinner">
-                    <form action="{% url "add_to_cart" item.product.id %}" method="POST">
-                        {% csrf_token %}
-                        {% for var in item.variations.all %}
-                        <input type="hidden" name="{{ var.variation_category }}" value="{{ var.variation_value }}">
-
-                        {% endfor %}
-                        <div class="input-group-prepend">
-                            <button  class="btn btn-light" type="submit">+</button>
-                        </div>
-                    </form>                                
-                        <input type="text" class="form-control" value="{{ item.quantity }}">
-                    <div class="input-group-append">
-                       <a href="{% url 'decrease_cart_item' item.product.id item.id %}"
-                        class="btn btn-light"
-                        type="button">
-                        &minus;
-                        </a>
-
+    {% if cart_items|length > 0 %}
+        <section class="section-content padding-y">
+            <div class="container">
+                <div class="row">
+                    <main class="col-md-9">
+                        <div class="card">
+                            <table class="table table-borderless table-shopping-cart">
+                                <thead class="text-muted">
+                                    <tr class="small text-uppercase">
+                                        <th scope="col">Product</th>
+                                        <th scope="col" width="120">Quantity</th>
+                                        <th scope="col" width="120">Price</th>
+                                        <th scope="col" class="text-right" width="200"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart_items %}
+                                        <tr>
+                                            <td>
+                                                <figure class="itemside">
+                                                    <div class="aside">
+                                                        <img src="{{ item.product.images.url }}"
+                                                             class="img-sm"
+                                                             alt="{{ item.product.product_name }}">
+                                                    </div>
+                                                    <figcaption class="info mt-2">
+                                                        <a href="{{ item.product.get_url }}" class="title text-dark">{{ item.product.product_name }}</a>
+                                                        <p class="text-muted small">
+                                                            {% for v in item.variations.all %}
+                                                                <span>{{ v.variation_category|capfirst }}</span>: {{ v.variation_value|capfirst }}
+                                                            {% endfor %}
+                                                        </p>
+                                                    </figcaption>
+                                                </figure>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-md flex-grow-0">
+                                                    <div class="input-group mb-3 input-spinner">
+                                                        <form action="{% url "add_to_cart" item.product.id %}" method="POST">
+                                                            {% csrf_token %}
+                                                            {% for var in item.variations.all %}
+                                                                <input type="hidden"
+                                                                       name="{{ var.variation_category }}"
+                                                                       value="{{ var.variation_value }}">
+                                                            {% endfor %}
+                                                            <div class="input-group-prepend">
+                                                                <button class="btn btn-light" type="submit">+</button>
+                                                            </div>
+                                                        </form>
+                                                        <input type="text" class="form-control" value="{{ item.quantity }}">
+                                                        <div class="input-group-append">
+                                                            <a href="{% url 'decrease_cart_item' item.product.id item.id %}"
+                                                               class="btn btn-light"
+                                                               type="button">&minus;</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="price-wrap">
-                                                <var class="price">
-                                                    ৳{{ item.sub_total|floatformat:2 }}
-                                                </var>
-                                                <small class="text-muted">৳{{ item.product.final_price|floatformat:2 }} each</small>
-                                            </div>
-                                            <!-- price-wrap .// -->
-                                        </td>
-                                        <td class="text-right">
-                                            <a data-original-title="Save to Wishlist"
-                                               title=""
-                                               href=""
-                                               class="btn btn-light"
-                                               data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
-                                            <a href="{% url "remove_cart_item" item.product.id item.id %}" class="btn btn-light">Remove</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <div class="card-body border-top">
-                            <a href="#" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
-                            <a href="{% url "store" %}" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
-                        </div>
-                    </div>
-                    <!-- card.// -->
-                    <div class="alert alert-success mt-3">
-                        <p class="icontext">
-                            <i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks
-                        </p>
-                    </div>
-                </main>
-                <!-- col.// -->
-                <aside class="col-md-3">
-                    {% if not discount %}
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <form action="{% url "apply_coupon" %}" method="POST">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label>Have coupon?</label>
-                                        <div class="input-group">
-                                            <input type="hidden" name="total" value="{{ total }}">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   name="coupon_code"
-                                                   value=""
-                                                   placeholder="Coupon code">
-                                            <span class="input-group-append">
-                                                <button type="submit" class="btn btn-primary">Apply</button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </form>
+                                            </td>
+                                            <td>
+                                                <div class="price-wrap">
+                                                    <var class="price">
+                                                        ৳{{ item.sub_total|floatformat:2 }}
+                                                    </var>
+                                                    <small class="text-muted">৳{{ item.product.final_price|floatformat:2 }} each</small>
+                                                </div>
+                                                <!-- price-wrap .// -->
+                                            </td>
+                                            <td class="text-right">
+                                                <a data-original-title="Save to Wishlist"
+                                                   title=""
+                                                   href=""
+                                                   class="btn btn-light"
+                                                   data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
+                                                <a href="{% url "remove_cart_item" item.product.id item.id %}"
+                                                   class="btn btn-light">Remove</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="card-body border-top">
+                                <a href="{% url "checkout" %}" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
+                                <a href="{% url "store" %}" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
                             </div>
                         </div>
-                    {% else %}
-                    {% comment %} show coupon applied alert {% endcomment %}
-                        <div class="alert alert-info">
-                            <p class="px-2 py-1">
-                                <i class="icon text-info fa fa-info-circle mr-1"></i> Coupon
-                                "<strong>{{ applied_coupon_code }}</strong>" applied.
+                        <!-- card.// -->
+                        <div class="alert alert-success mt-3">
+                            <p class="icontext">
+                                <i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks
                             </p>
                         </div>
-                    {% endif %}
-                    <!-- card-body.// -->
-                    <!-- card .// -->
-                    <div class="card">
-                        <div class="card-body">
-                            <dl class="dlist-align">
-                                <dt>Total price:</dt>
-                                <dd class="text-right">
-                                    {{ total|floatformat:2 }}
-                                </dd>
-                            </dl>
-                            <dl class="dlist-align">
-                                <dt>Discount:</dt>
-                                <dd class="text-right">
-                                    {{ discount|floatformat:2 }}
-                                </dd>
-                            </dl>
-                            <dl class="dlist-align">
-                                <dt>Tax:</dt>
-                                <dd class="text-right">
-                                    {{ tax|floatformat:2 }}
-                                </dd>
-                            </dl>
-                            <dl class="dlist-align">
-                                <dt>Total:</dt>
-                                <dd class="text-right  h5">
-                                    <strong>{{ grand_total|floatformat:2 }}</strong>
-                                </dd>
-                            </dl>
-                            <hr>
-                            <p class="text-center mb-3">
-                                <img src="{% static 'images/misc/payments.png' %}" height="26">
-                            </p>
-                        </div>
+                    </main>
+                    <!-- col.// -->
+                    <aside class="col-md-3">
+                        {% if not discount %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <form action="{% url "apply_coupon" %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>Have coupon?</label>
+                                            <div class="input-group">
+                                                <input type="hidden" name="total" value="{{ total }}">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       name="coupon_code"
+                                                       value=""
+                                                       placeholder="Coupon code">
+                                                <span class="input-group-append">
+                                                    <button type="submit" class="btn btn-primary">Apply</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        {% else %}
+                            {% comment %} show coupon applied alert {% endcomment %}
+                            <div class="alert alert-info">
+                                <p class="px-2 py-1">
+                                    <i class="icon text-info fa fa-info-circle mr-1"></i> Coupon
+                                    "<strong>{{ applied_coupon_code }}</strong>" applied.
+                                </p>
+                            </div>
+                        {% endif %}
                         <!-- card-body.// -->
-                    </div>
-                    <!-- card .// -->
-                </aside>
-                <!-- col.// -->
+                        <!-- card .// -->
+                        <div class="card">
+                            <div class="card-body">
+                                <dl class="dlist-align">
+                                    <dt>Total price:</dt>
+                                    <dd class="text-right">
+                                        {{ total|floatformat:2 }}
+                                    </dd>
+                                </dl>
+                                <dl class="dlist-align">
+                                    <dt>Discount:</dt>
+                                    <dd class="text-right">
+                                        {{ discount|floatformat:2 }}
+                                    </dd>
+                                </dl>
+                                <dl class="dlist-align">
+                                    <dt>Tax:</dt>
+                                    <dd class="text-right">
+                                        {{ tax|floatformat:2 }}
+                                    </dd>
+                                </dl>
+                                <dl class="dlist-align">
+                                    <dt>Total:</dt>
+                                    <dd class="text-right  h5">
+                                        <strong>{{ grand_total|floatformat:2 }}</strong>
+                                    </dd>
+                                </dl>
+                                <hr>
+                                <p class="text-center mb-3">
+                                    <img src="{% static 'images/misc/payments.png' %}" height="26">
+                                </p>
+                            </div>
+                            <!-- card-body.// -->
+                        </div>
+                        <!-- card .// -->
+                    </aside>
+                    <!-- col.// -->
+                </div>
             </div>
+            <!-- container .//  -->
+        </section>
+    {% else %}
+        <div class="container my-5 py-5">
+            <h2 class="text-center">Your Shopping Cart is Empty</h2>
+                <br>
+                <div class="text-center">
+                    <a href="{% url 'store' %}" class="btn btn-primary">Continue Shopping</a>
+                </div>
         </div>
-        <!-- container .//  -->
-    </section>
+    {% endif %}
+    {% comment %} Payment and refund policy {% endcomment %}
     <section class="section-name bg padding-y">
         <div class="container">
             <h6>Payment and refund policy</h6>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                We use SSLCommerz, a secure and trusted payment gateway, to process all payments on our platform. Payments can be made using supported methods such as debit cards, credit cards, mobile banking, and other options provided by SSLCommerz.
+                All transactions are encrypted and processed securely. We do not store or have access to your card or payment credentials. Once a payment is successfully completed, an order confirmation will be generated automatically.
+                In case of a failed or interrupted transaction, the amount will not be deducted. If any amount is deducted due to a technical issue, it will be automatically reversed by the payment provider within the stipulated time.
             </p>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Refunds are processed in accordance with our refund eligibility rules and SSLCommerz payment guidelines.
+                Refund requests must be submitted within the specified time frame after placing the order.
+                Approved refunds will be processed through the original payment method used during checkout.
+                The refund processing time depends on SSLCommerz and the issuing bank or mobile financial service provider.
+                Partial refunds may apply depending on the product, service, or usage status.
+                Any transaction fees charged by the payment gateway or banks may be non-refundable.
+                We reserve the right to reject refund requests if the order does not meet our refund conditions or if fraudulent activity is suspected.
             </p>
         </div>
         <!-- container // -->

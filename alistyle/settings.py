@@ -2,13 +2,13 @@ from pathlib import Path
 from decouple import config
 import os
 from django.contrib.messages import constants as messages
-
+from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
-#print(
+# print(
 #    "🐍 File: alistyle/settings.py | Line: 6 | undefined ~ BASE_DIR",
 #    BASE_DIR,
 #    Path(__file__).resolve().parent,
-#)
+# )
 
 
 SECRET_KEY = config("SECRET_KEY")
@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     "store",
     "carts",
     "coupon",
+    "orders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     # "django_session_timeout.middleware.SessionTimeoutMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -108,11 +110,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
-
+LANGUAGE_CODE = "en"
+LANGUAGES = [
+    ('en', _('English')),
+    ('bn', _('Bengali')),
+]
 
 USE_I18N = True
-
 USE_TZ = True
 TIME_ZONE = "Asia/Dhaka"
 
