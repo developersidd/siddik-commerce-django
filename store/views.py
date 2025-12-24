@@ -1,8 +1,7 @@
-from django.conf.locale import el
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
-
+from django.utils.translation import gettext as _
 from store.forms import ReviewForm
 from store.models import Product, ProductGallery, ReviewRating, Variation
 
@@ -18,14 +17,14 @@ def store(request, category_slug=None):
     page = request.GET.get("page", 1)
     limit = request.GET.get("limit", 6)
     SORT_OPTIONS = {
-        "title": ("Title", "-product_name"),
-        "latest_items": ("Latest Items", "-created_at"),
-        "cheapest": ("Cheapest", "price"),
-        "most_popular": ("Most Popular", "-purchase_count"),
-        "highest_rated": ("Highest Rated", "-reviewrating__rating"),
-        "expensive": ("Expensive", "-price"),
-        "oldest_items": ("Oldest Items", "created_at"),
-        "trending": ("Trending", "-view_count"),
+        "title": (_("Title"), "-product_name"),
+        "latest_items": (_("Latest Items"), "-created_at"),
+        "cheapest": (_("Cheapest"), "price"),
+        "most_popular": (_("Most Popular"), "-purchase_count"),
+        "highest_rated": (_("Highest Rated"), "-reviewrating__rating"),
+        "expensive": (_("Expensive"), "-price"),
+        "oldest_items": (_("Oldest Items"), "created_at"),
+        "trending": (_("Trending"), "-view_count"),
     }
 
     if sort_by not in SORT_OPTIONS:

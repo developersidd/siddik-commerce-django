@@ -1,4 +1,5 @@
 from pathlib import Path
+from re import LOCALE
 from decouple import config
 import os
 from django.contrib.messages import constants as messages
@@ -113,13 +114,15 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en"
 LANGUAGES = [
     ('en', _('English')),
-    ('bn', _('Bengali')),
+    ('bn', _('Bangla')),
 ]
 
 USE_I18N = True
 USE_TZ = True
 TIME_ZONE = "Asia/Dhaka"
-
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

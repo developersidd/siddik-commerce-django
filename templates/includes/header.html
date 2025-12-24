@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <header class="section-header">
   <nav class="navbar navbar-dark navbar-expand p-0 bg-primary">
@@ -22,7 +23,7 @@
         <li class="nav-item">
           <a href="#" class="nav-link">Call: +99812345678</a>
         </li>
-        <li class="nav-item dropdown">
+        {% comment %}<li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">English</a>
           <ul class="dropdown-menu dropdown-menu-right" style="max-width: 100px">
             <li>
@@ -32,7 +33,33 @@
               <a class="dropdown-item" href="#">Russian</a>
             </li>
           </ul>
-        </li>
+        </li>{% endcomment %}
+        <div class="dropdown">
+          <a href="#"
+             class="nav-link dropdown-toggle"
+             data-toggle="dropdown"
+             id="languageDropdown">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% for lang_code, lang_name in LANGUAGES %}
+              {% if lang_code == LANGUAGE_CODE %}{{ lang_name }}{% endif %}
+            {% endfor %}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="languageDropdown">
+            {% for lang_code, lang_name in LANGUAGES %}
+              <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <input type="hidden" name="language" value="{{ lang_code }}">
+                <button type="submit"
+                        style="outline:none;"
+                        class="dropdown-item  {% if lang_code == LANGUAGE_CODE %}active{% endif %}">
+                  {{ lang_name }}
+                </button>
+              </form>
+            {% endfor %}
+          </div>
+        </div>
       </ul>
     </div>
   </nav>
@@ -113,8 +140,7 @@
           <a class="nav-link pl-0" data-toggle="dropdown" href="#"><strong><i class="fa fa-bars"></i> &nbsp; All category</strong></a>
           <div class="dropdown-menu">
             {% for category in links %}
-              <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}
-              </a>
+              <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name|capfirst }}</a>
             {% endfor %}
           </div>
         </li>

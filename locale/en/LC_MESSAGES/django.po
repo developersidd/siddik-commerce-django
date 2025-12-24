@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-24 15:26+0600\n"
+"POT-Creation-Date: 2025-12-24 23:34+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\alistyle\settings.py:115
+
+#: .\alistyle\settings.py:116
 msgid "English"
 msgstr ""
 
-#: .\alistyle\settings.py:116
-msgid "Bengali"
+#: .\alistyle\settings.py:117
+msgid "Bangla"
+msgstr ""
+
+#: .\store\views.py:20
+msgid "Title"
+msgstr ""
+
+#: .\store\views.py:21
+msgid "Latest Items"
+msgstr ""
+
+#: .\store\views.py:22
+msgid "Cheapest"
+msgstr ""
+
+#: .\store\views.py:23
+msgid "Most Popular"
+msgstr ""
+
+#: .\store\views.py:24
+msgid "Highest Rated"
+msgstr ""
+
+#: .\store\views.py:25
+msgid "Expensive"
+msgstr ""
+
+#: .\store\views.py:26
+msgid "Oldest Items"
+msgstr ""
+
+#: .\store\views.py:27
+msgid "Trending"
+msgstr ""
+
+#: .\templates\store\store.html:171
+msgid "Items found"
+msgstr ""
+
+#: .\templates\store\store.html:213
+msgid "No products found matching the selected criteria."
 msgstr ""

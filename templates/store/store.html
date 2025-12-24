@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% block content %}
     {% comment %} Breadcrumb {% endcomment %}
@@ -24,9 +25,11 @@
                         {% comment %} get all the category_slug {% endcomment %}
                         <li class="breadcrumb-item active" aria-current="page">
                             {% for category_slug in category_slugs %}
-                            <span>
-                                {{ category_slug|capfirst }}{% if not forloop.last %}, {% endif %}</span>
-                                {% endfor %}
+                                <span>
+                                    {{ category_slug|capfirst }}
+                                    {% if not forloop.last %},{% endif %}
+                                </span>
+                            {% endfor %}
                         </li>
                     {% endif %}
                 </ol>
@@ -162,7 +165,9 @@
             <main class="col-md-9">
                 <header class="border-bottom mb-4 pb-3">
                     <div class="form-inline">
-                        <span class="mr-md-auto">{{ products.paginator.count }} Items found</span>
+                        <span class="mr-md-auto">{{ products.paginator.count }}
+                            {% trans "Items found" %}
+                        </span>
                         <select name="sort_by" id="sort_by" class="mr-2 form-control">
                             {% for k, v in sort_options.items %}
                                 <option value="{{ k }}" {% if sort_by == k %}selected{% endif %}>{{ v.0 }}</option>
@@ -186,65 +191,73 @@
                     {% comment %}</form>{% endcomment %}
                 </header>
                 <!-- sect-heading -->
-                 <section style="min-height: 560px;">
-
-                     <div class="row">
-                         {% for product in products %}
-                         {% if request.GET.layout == "list" %}
-                            {% include "includes/product-large-card.html" with product=product %}
-                        {% else %}
-                        {% include "includes/product-card.html" with product=product column_width=4 %}
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </section>
-                {% comment %}  Pagination {% endcomment %}
-                {% if products|length > 0 %}
-                    <nav class="mt-4" aria-label="Page navigation sample">
-                        <ul class="pagination">
-                            {% if products.has_previous %}
-                                <li class="page-item">
-                                    <button data-page-num="{{ products.previous_page_number }}"
-                                            class="page-btn page-link">Previous</button>
-                                </li>
-                                {% comment %}  first page {% endcomment %}
-                                <li class="page-item">
-                                    <button data-page-num="1" class="page-btn page-link">First</button>
-                                </li>
-                            {% else %}
-                                <li class="page-item disabled">
-                                    <button class="page-link" disabled>Previous</button>
-                                </li>
-                            {% endif %}
-                            {% for i in products.paginator.page_range %}
-                                {% if products.number == i %}
-                                    <li class="page-item active">
-                                        <button data-page-num="{{ i }}" class="page-btn page-link">{{ i }}</button>
-                                    </li>
+                <section style="min-height: 560px;">
+                    {% if products|length > 0 %}
+                        <div class="row">
+                            {% for product in products %}
+                                {% if request.GET.layout == "list" %}
+                                    {% include "includes/product-large-card.html" with product=product %}
                                 {% else %}
-                                    <li class="page-item">
-                                        <button data-page-num="{{ i }}" class="page-btn page-link page_num_btn">{{ i }}</button>
-                                    </li>
+                                    {% include "includes/product-card.html" with product=product column_width=4 %}
                                 {% endif %}
                             {% endfor %}
-                            {% if products.has_next %}
-                                <li class="page-item">
-                                    <button id="next_page_btn" class="page-btn page-link">Next</button>
-                                </li>
-                                <li class="page-item">
-                                    <button data-page-num="{{ products.paginator.num_pages }}"
-                                            id="last_page_btn"
-                                            class="page-btn page-link">Last</button>
+                        </div>
+                    {% else %}
+                        <div class="container mt-5 pt-5">
+                            {% comment %} show no search icon {% endcomment %}
+                            <i class="fa fa-search fa-3x d-block text-center mb-4 text-muted"></i>
+                            <h5 class="text-center">{% blocktrans %}No products found matching the selected criteria.{% endblocktrans %}</h5>
+                        </h5>
+                    </div>
+                {% endif %}
+            </section>
+            {% comment %}  Pagination {% endcomment %}
+            {% if products|length > 0 %}
+                <nav class="mt-4" aria-label="Page navigation sample">
+                    <ul class="pagination">
+                        {% if products.has_previous %}
+                            <li class="page-item">
+                                <button data-page-num="{{ products.previous_page_number }}"
+                                        class="page-btn page-link">Previous</button>
+                            </li>
+                            {% comment %}  first page {% endcomment %}
+                            <li class="page-item">
+                                <button data-page-num="1" class="page-btn page-link">First</button>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <button class="page-link" disabled>Previous</button>
+                            </li>
+                        {% endif %}
+                        {% for i in products.paginator.page_range %}
+                            {% if products.number == i %}
+                                <li class="page-item active">
+                                    <button data-page-num="{{ i }}" class="page-btn page-link">{{ i }}</button>
                                 </li>
                             {% else %}
-                                <li class="page-item disabled">
-                                    <button class="page-link" disabled>Next</button>
+                                <li class="page-item">
+                                    <button data-page-num="{{ i }}" class="page-btn page-link page_num_btn">{{ i }}</button>
                                 </li>
                             {% endif %}
-                        </ul>
-                    </nav>
-                {% endif %}
-            </main>
-        </div>
+                        {% endfor %}
+                        {% if products.has_next %}
+                            <li class="page-item">
+                                <button id="next_page_btn" class="page-btn page-link">Next</button>
+                            </li>
+                            <li class="page-item">
+                                <button data-page-num="{{ products.paginator.num_pages }}"
+                                        id="last_page_btn"
+                                        class="page-btn page-link">Last</button>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <button class="page-link" disabled>Next</button>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </main>
     </div>
+</div>
 {% endblock content %}
