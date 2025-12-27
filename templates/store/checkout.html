@@ -4,11 +4,46 @@
   <section class="section-content padding-y bg">
     <div class="container">
       <!-- ============================ COMPONENT 1 ================================= -->
+      <div class="steps-horizontal mx-auto mt-3 mb-5">
+        <div style="position: absolute;
+                    top: 24px;
+                    width: 250px;
+                    left: 5rem;
+                    right: 0;
+                    border: 2px solid #4361ee;
+                    z-index: 1"></div>
+        <div class="step-horizontal complete">
+          <div class="step-icon">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="step-title">
+            <a href="{% url "cart" %}">Cart</a>
+          </div>
+        </div>
+        <div class="step-horizontal active">
+          <div class="step-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="step-title">Shipping</div>
+        </div>
+        <div class="step-horizontal">
+          <div class="step-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <div class="step-title">Payment</div>
+        </div>
+        <div class="step-horizontal">
+          <div class="step-icon">
+            <i class="fas fa-flag"></i>
+          </div>
+          <div class="step-title">Confirmation</div>
+        </div>
+      </div>
       <div class="row">
         <aside class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title mb-4">Billing Address</h4>
+              <h4 class="card-title mb-4">Shipping Address</h4>
               <form action="{% url 'place_order' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-row">

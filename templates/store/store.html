@@ -7,19 +7,19 @@
         <div class="container">
             <h2 class="title-page">
                 {% if request.GET.category_slug %}
-                    Category
+                    {% trans "Category" %}
                 {% else %}
-                    Store
+                    {% trans "Store" %}
                 {% endif %}
-                products
+                {% trans "Products" %}
             </h2>
             <nav>
                 <ol class="breadcrumb text-white">
                     <li class="breadcrumb-item">
-                        <a href="{% url 'home' %}">Home</a>
+                        <a href="{% url 'home' %}">{% trans "Home" %}</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{% url 'store' %}">Store</a>
+                        <a href="{% url 'store' %}">{% trans "Store" %}</a>
                     </li>
                     {% if category_slugs %}
                         {% comment %} get all the category_slug {% endcomment %}
@@ -51,7 +51,8 @@
                                    aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Categories</h6>
+                                    <h6 class="title">
+                                        {% trans "Categories" %}</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_2">
@@ -82,7 +83,8 @@
                                    aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Price range</h6>
+                                    <h6 class="title">
+                                        {% trans "Price range" %}</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_3">
@@ -108,7 +110,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>Min</label>
+                                            <label>{% trans "Min" %}</label>
                                             <input id="min_price"
                                                    value="{{ min_price | default:'0' }}"
                                                    name="min_price"
@@ -117,7 +119,9 @@
                                                    type="number">
                                         </div>
                                         <div class="form-group text-right col-md-6">
-                                            <label>Max</label>
+                                            <label>
+                                                {% trans "Max" %}
+                                            </label>
                                             <input value="{{ max_price | default:store_max_price }}"
                                                    id="max_price"
                                                    name="max_price"
@@ -127,7 +131,7 @@
                                         </div>
                                     </div>
                                     <!-- form-row.// -->
-                                    <button type="submit" class="btn btn-block btn-primary">Apply</button>
+                                    <button type="submit" class="btn btn-block btn-primary">{% trans "Apply" %}</button>
                                 </div>
                                 <!-- card-body.// -->
                             </div>
@@ -140,7 +144,7 @@
                                    aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Sizes</h6>
+                                    <h6 class="title">{% trans "Sizes" %}</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_4">
@@ -177,13 +181,15 @@
                             <button class="btn btn-outline-secondary layout-btn {% if request.GET.layout == "list" %}active{% endif %}"
                                     data-toggle="tooltip"
                                     data-layout="list"
-                                    title="List view">
+                                    title="{% trans "List view" %}"
+                                    
+                                    >
                                 <i class="fa fa-bars"></i>
                             </button>
                             <button class="btn btn-outline-secondary layout-btn {% if request.GET.layout == "grid" %}active{% endif %}"
                                     data-toggle="tooltip"
                                     data-layout="grid"
-                                    title="Grid view">
+                                    title="{% trans "Grid view" %}">
                                 <i class="fa fa-th"></i>
                             </button>
                         </div>
@@ -218,15 +224,15 @@
                         {% if products.has_previous %}
                             <li class="page-item">
                                 <button data-page-num="{{ products.previous_page_number }}"
-                                        class="page-btn page-link">Previous</button>
+                                        class="page-btn page-link">{% trans "Previous" %}</button>
                             </li>
                             {% comment %}  first page {% endcomment %}
                             <li class="page-item">
-                                <button data-page-num="1" class="page-btn page-link">First</button>
+                                <button data-page-num="1" class="page-btn page-link">{% trans "First" %}</button>
                             </li>
                         {% else %}
                             <li class="page-item disabled">
-                                <button class="page-link" disabled>Previous</button>
+                                <button class="page-link" disabled>{% trans "Previous" %}</button>
                             </li>
                         {% endif %}
                         {% for i in products.paginator.page_range %}
@@ -242,16 +248,16 @@
                         {% endfor %}
                         {% if products.has_next %}
                             <li class="page-item">
-                                <button id="next_page_btn" class="page-btn page-link">Next</button>
+                                <button id="next_page_btn" class="page-btn page-link">{% trans "Next" %}</button>
                             </li>
                             <li class="page-item">
                                 <button data-page-num="{{ products.paginator.num_pages }}"
                                         id="last_page_btn"
-                                        class="page-btn page-link">Last</button>
+                                        class="page-btn page-link">{% trans "Last" %}</button>
                             </li>
                         {% else %}
                             <li class="page-item disabled">
-                                <button class="page-link" disabled>Next</button>
+                                <button class="page-link" disabled>{% trans "Next" %}</button>
                             </li>
                         {% endif %}
                     </ul>

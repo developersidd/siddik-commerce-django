@@ -1,9 +1,12 @@
 {% extends "simple-base.html" %}
 {% load static %}
+{% load i18n %}
+{% comment %}{% load humanize %}{% endcomment %}
 {% block content %}
     <section class="section-pagetop bg">
         <div class="container">
-            <h2 class="title-page">Shopping cart</h2>
+            <h2 class="title-page">
+                {% trans "Shopping cart" %}</h2>
         </div>
         <!-- container //  -->
     </section>
@@ -16,9 +19,9 @@
                             <table class="table table-borderless table-shopping-cart">
                                 <thead class="text-muted">
                                     <tr class="small text-uppercase">
-                                        <th scope="col">Product</th>
-                                        <th scope="col" width="120">Quantity</th>
-                                        <th scope="col" width="120">Price</th>
+                                        <th scope="col">{% trans "Product" %}</th>
+                                        <th scope="col" width="120">{% trans "Quantity" %}</th>
+                                        <th scope="col" width="120">{% trans "Price" %}</th>
                                         <th scope="col" class="text-right" width="200"></th>
                                     </tr>
                                 </thead>
@@ -70,7 +73,9 @@
                                                     <var class="price">
                                                         ৳{{ item.sub_total|floatformat:2 }}
                                                     </var>
-                                                    <small class="text-muted">৳{{ item.product.final_price|floatformat:2 }} each</small>
+                                                    <small class="text-muted">৳{{ item.product.final_price|floatformat:2 }}
+                                                        {% trans "each" %}
+                                                    </small>
                                                 </div>
                                                 <!-- price-wrap .// -->
                                             </td>
@@ -81,15 +86,16 @@
                                                    class="btn btn-light"
                                                    data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
                                                 <a href="{% url "remove_cart_item" item.product.id item.id %}"
-                                                   class="btn btn-light">Remove</a>
+                                                   class="btn btn-light">{% trans "Remove" %}</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
                             <div class="card-body border-top">
-                                <a href="{% url "checkout" %}" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
-                                <a href="{% url "store" %}" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
+                                <a href="{% url "checkout" %}" class="btn btn-primary float-md-right"> {% trans "Make Purchase" %}
+                                    <i class="fa fa-chevron-right"></i> </a>
+                                <a href="{% url "store" %}" class="btn btn-light"> <i class="fa fa-chevron-left"></i> {% trans "Continue shopping" %} </a>
                             </div>
                         </div>
                         <!-- card.// -->
@@ -107,16 +113,16 @@
                                     <form action="{% url "apply_coupon" %}" method="POST">
                                         {% csrf_token %}
                                         <div class="form-group">
-                                            <label>Have coupon?</label>
+                                            <label>{% trans "Have coupon?" %}</label>
                                             <div class="input-group">
                                                 <input type="hidden" name="total" value="{{ total }}">
                                                 <input type="text"
                                                        class="form-control"
                                                        name="coupon_code"
                                                        value=""
-                                                       placeholder="Coupon code">
+                                                       placeholder="{% trans "Coupon code" %}">
                                                 <span class="input-group-append">
-                                                    <button type="submit" class="btn btn-primary">Apply</button>
+                                                    <button type="submit" class="btn btn-primary">{% trans "Apply" %}</button>
                                                 </span>
                                             </div>
                                         </div>
@@ -127,8 +133,8 @@
                             {% comment %} show coupon applied alert {% endcomment %}
                             <div class="alert alert-info">
                                 <p class="px-2 py-1">
-                                    <i class="icon text-info fa fa-info-circle mr-1"></i> Coupon
-                                    "<strong>{{ applied_coupon_code }}</strong>" applied.
+                                    <i class="icon text-info fa fa-info-circle mr-1"></i> {% trans "Coupon" %}
+                                    "<strong>{{ applied_coupon_code }}</strong>" {% trans "applied." %}
                                 </p>
                             </div>
                         {% endif %}
@@ -137,25 +143,25 @@
                         <div class="card">
                             <div class="card-body">
                                 <dl class="dlist-align">
-                                    <dt>Total price:</dt>
+                                    <dt>{% trans "Total price" %}:</dt>
                                     <dd class="text-right">
                                         {{ total|floatformat:2 }}
                                     </dd>
                                 </dl>
                                 <dl class="dlist-align">
-                                    <dt>Discount:</dt>
+                                    <dt>{% trans "Discount" %}:</dt>
                                     <dd class="text-right">
                                         {{ discount|floatformat:2 }}
                                     </dd>
                                 </dl>
                                 <dl class="dlist-align">
-                                    <dt>Tax:</dt>
+                                    <dt>{% trans "Tax" %}:</dt>
                                     <dd class="text-right">
                                         {{ tax|floatformat:2 }}
                                     </dd>
                                 </dl>
                                 <dl class="dlist-align">
-                                    <dt>Total:</dt>
+                                    <dt>{% trans "Total" %}:</dt>
                                     <dd class="text-right  h5">
                                         <strong>{{ grand_total|floatformat:2 }}</strong>
                                     </dd>
@@ -176,23 +182,26 @@
         </section>
     {% else %}
         <div class="container my-5 py-5">
-            <h2 class="text-center">Your Shopping Cart is Empty</h2>
-                <br>
-                <div class="text-center">
-                    <a href="{% url 'store' %}" class="btn btn-primary">Continue Shopping</a>
-                </div>
+            <h2 class="text-center">{% trans "Your Shopping Cart is Empty" %}</h2>
+            <br>
+            <div class="text-center">
+                <a href="{% url 'store' %}" class="btn btn-primary">{% trans "Continue Shopping" %}</a>
+            </div>
         </div>
     {% endif %}
     {% comment %} Payment and refund policy {% endcomment %}
     <section class="section-name bg padding-y">
         <div class="container">
-            <h6>Payment and refund policy</h6>
+            <h6>{% trans "Payment and refund policy" %}</h6>
             <p>
+                {% blocktrans %}
                 We use SSLCommerz, a secure and trusted payment gateway, to process all payments on our platform. Payments can be made using supported methods such as debit cards, credit cards, mobile banking, and other options provided by SSLCommerz.
                 All transactions are encrypted and processed securely. We do not store or have access to your card or payment credentials. Once a payment is successfully completed, an order confirmation will be generated automatically.
                 In case of a failed or interrupted transaction, the amount will not be deducted. If any amount is deducted due to a technical issue, it will be automatically reversed by the payment provider within the stipulated time.
+                {% endblocktrans %}
             </p>
             <p>
+                {% blocktrans %}
                 Refunds are processed in accordance with our refund eligibility rules and SSLCommerz payment guidelines.
                 Refund requests must be submitted within the specified time frame after placing the order.
                 Approved refunds will be processed through the original payment method used during checkout.
@@ -200,6 +209,7 @@
                 Partial refunds may apply depending on the product, service, or usage status.
                 Any transaction fees charged by the payment gateway or banks may be non-refundable.
                 We reserve the right to reject refund requests if the order does not meet our refund conditions or if fraudulent activity is suspected.
+                {% endblocktrans %}
             </p>
         </div>
         <!-- container // -->

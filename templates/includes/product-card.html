@@ -1,11 +1,12 @@
 {% load static %}
+{% load i18n %}
 {% comment %} djlint:off H006 H013 H021 {% endcomment %}
 {% csrf_token %}
 <div class="{% if column_width %}col-md-{{ column_width }}{% else %} col-md-3 {% endif %}">
   <div class="card card-product-grid">
     <div class="img-wrap">
       <img src="{{ product.images.url }}" />
-      <a class="btn-overlay" href="{{ product.get_url }}"><i class="fa fa-search-plus"></i> Quick view</a>
+      <a class="btn-overlay" href="{{ product.get_url }}"><i class="fa fa-search-plus"></i> {% trans "Quick view" %}</a>
     </div>
     {% if product.get_active_discount_info.name %}
       <span class="badge badge-info">{{ product.get_active_discount_info.name }}</span>
@@ -42,7 +43,7 @@
           </li>
         </ul>
         {% if product.countReview > 0 %}
-          <span class="label-rating text-muted">{{ product.countReview }} reviews</span>
+          <span class="label-rating text-muted">{{ product.countReview }} {% trans "reviews" %}</span>
         {% endif %}
       </div>
       <div class="price mt-1">
@@ -58,7 +59,7 @@
         <button type="submit"
                 class="btn btn-primary w-100 mt-3"
                 data-product-id="{{ product.id }}">
-          <i class="icon fas fa-shopping-cart"></i> <span class="text">Add to Cart</span>
+          <i class="icon fas fa-shopping-cart"></i> <span class="text">{% trans "Add to cart" %}</span>
         </button>
       </form>
       <!-- price-wrap.// -->

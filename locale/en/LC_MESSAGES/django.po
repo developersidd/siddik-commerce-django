@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-26 14:19+0600\n"
+"POT-Creation-Date: 2025-12-27 15:39+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,35 +26,35 @@ msgstr ""
 msgid "Bangla"
 msgstr ""
 
-#: .\store\views.py:20
+#: .\store\views.py:22
 msgid "Title"
 msgstr ""
 
-#: .\store\views.py:21
+#: .\store\views.py:23
 msgid "Latest Items"
 msgstr ""
 
-#: .\store\views.py:22
+#: .\store\views.py:24
 msgid "Cheapest"
 msgstr ""
 
-#: .\store\views.py:23
+#: .\store\views.py:25
 msgid "Most Popular"
 msgstr ""
 
-#: .\store\views.py:24
+#: .\store\views.py:26
 msgid "Highest Rated"
 msgstr ""
 
-#: .\store\views.py:25
+#: .\store\views.py:27
 msgid "Expensive"
 msgstr ""
 
-#: .\store\views.py:26
+#: .\store\views.py:28
 msgid "Oldest Items"
 msgstr ""
 
-#: .\store\views.py:27
+#: .\store\views.py:29
 msgid "Trending"
 msgstr ""
 
@@ -66,91 +66,421 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: .\templates\store\product_detail.html:10
+#: .\templates\includes\footer.html:11
+msgid ""
+"Your one-stop shop for all your needs. We offer a wide range of products at "
+"unbeatable prices, ensuring quality and customer satisfaction every step of "
+"the way."
+msgstr ""
+
+#: .\templates\includes\footer.html:19
+msgid "Brands"
+msgstr ""
+
+#: .\templates\includes\footer.html:22
+msgid "Adidas"
+msgstr ""
+
+#: .\templates\includes\footer.html:25
+msgid "Puma"
+msgstr ""
+
+#: .\templates\includes\footer.html:28
+msgid "Reebok"
+msgstr ""
+
+#: .\templates\includes\footer.html:31
+msgid "Nike"
+msgstr ""
+
+#: .\templates\includes\footer.html:36
+msgid "Company"
+msgstr ""
+
+#: .\templates\includes\footer.html:39
+msgid "About us"
+msgstr ""
+
+#: .\templates\includes\footer.html:42
+msgid "Career"
+msgstr ""
+
+#: .\templates\includes\footer.html:45
+msgid "Find a store"
+msgstr ""
+
+#: .\templates\includes\footer.html:48
+msgid "Rules and terms"
+msgstr ""
+
+#: .\templates\includes\footer.html:51
+msgid "Sitemap"
+msgstr ""
+
+#: .\templates\includes\footer.html:56
+msgid "Help"
+msgstr ""
+
+#: .\templates\includes\footer.html:59
+msgid "Contact us"
+msgstr ""
+
+#: .\templates\includes\footer.html:62
+msgid "Money refund"
+msgstr ""
+
+#: .\templates\includes\footer.html:65
+msgid "Order status"
+msgstr ""
+
+#: .\templates\includes\footer.html:68
+msgid "Shipping info"
+msgstr ""
+
+#: .\templates\includes\footer.html:71
+msgid "Open dispute"
+msgstr ""
+
+#: .\templates\includes\footer.html:76
+msgid "Social"
+msgstr ""
+
+#: .\templates\includes\footer.html:79
+msgid "Facebook"
+msgstr ""
+
+#: .\templates\includes\footer.html:82
+msgid "X"
+msgstr ""
+
+#: .\templates\includes\footer.html:85
+msgid "Instagram"
+msgstr ""
+
+#: .\templates\includes\footer.html:88
+msgid "Youtube"
+msgstr ""
+
+#: .\templates\includes\footer.html:98
+msgid "  &copy 2025 Siddik Ecommerce "
+msgstr ""
+
+#: .\templates\includes\footer.html:103
+msgid "Dhaka, Bangladesh"
+msgstr ""
+
+#: .\templates\includes\header.html:8 .\templates\store\product_detail.html:12
+#: .\templates\store\store.html:20
 msgid "Home"
 msgstr ""
 
-#: .\templates\store\product_detail.html:13
+#: .\templates\includes\header.html:11 .\templates\store\product_detail.html:16
+#: .\templates\store\store.html:13 .\templates\store\store.html:23
 msgid "Store"
 msgstr ""
 
-#: .\templates\store\product_detail.html:56
-#: .\templates\store\product_detail.html:202
+#: .\templates\includes\header.html:14
+msgid "Cart"
+msgstr ""
+
+#: .\templates\includes\header.html:26
+msgid "Call"
+msgstr ""
+
+#: .\templates\includes\header.html:82 .\templates\includes\header.html:85
+#: .\templates\simple-base.html:52 .\templates\simple-base.html:55
+msgid "Search"
+msgstr ""
+
+#: .\templates\includes\header.html:110 .\templates\simple-base.html:82
+msgid "Welcome Guest"
+msgstr ""
+
+#: .\templates\includes\header.html:115 .\templates\simple-base.html:87
+msgid "Logout"
+msgstr ""
+
+#: .\templates\includes\header.html:119 .\templates\simple-base.html:91
+msgid "Sign in"
+msgstr ""
+
+#: .\templates\includes\header.html:120 .\templates\simple-base.html:92
+msgid "Register"
+msgstr ""
+
+#: .\templates\includes\header.html:145
+msgid "All category"
+msgstr ""
+
+#: .\templates\includes\product-card.html:9
+msgid "Quick view"
+msgstr ""
+
+#: .\templates\includes\product-card.html:47
+#: .\templates\includes\product-large-card.html:36
+#: .\templates\store\product_detail.html:59
+#: .\templates\store\product_detail.html:205
 msgid "reviews"
 msgstr ""
 
-#: .\templates\store\product_detail.html:61
-msgid "High quality material"
+#: .\templates\includes\product-card.html:63
+msgid "Add to Cart"
 msgstr ""
 
-#: .\templates\store\product_detail.html:64
-msgid "Excellent build quality"
+#: .\templates\includes\product-large-card.html:59
+msgid "Details"
 msgstr ""
 
-#: .\templates\store\product_detail.html:67
-msgid "Long lasting and durable"
+#: .\templates\includes\product-large-card.html:61
+msgid "Add to wishlist"
 msgstr ""
 
-#: .\templates\store\product_detail.html:72
-msgid "Available Size"
+#: .\templates\simple-base.html:120
+msgid "Copyright 2025 All rights reserved"
 msgstr ""
 
-#: .\templates\store\product_detail.html:85
-msgid "Color"
+#: .\templates\simple-base.html:122
+msgid "Terms and conditions"
 msgstr ""
 
-#: .\templates\store\product_detail.html:97
+#: .\templates\store\cart.html:9
+msgid "Shopping cart"
+msgstr ""
+
+#: .\templates\store\cart.html:22
+msgid "Product"
+msgstr ""
+
+#: .\templates\store\cart.html:23 .\templates\store\product_detail.html:100
 msgid "Quantity"
 msgstr ""
 
-#: .\templates\store\product_detail.html:123
+#: .\templates\store\cart.html:24
+msgid "Price"
+msgstr ""
+
+#: .\templates\store\cart.html:77
+msgid "each"
+msgstr ""
+
+#: .\templates\store\cart.html:90
+msgid "Remove"
+msgstr ""
+
+#: .\templates\store\cart.html:97
+msgid "Make Purchase"
+msgstr ""
+
+#: .\templates\store\cart.html:99
+msgid "Continue shopping"
+msgstr ""
+
+#: .\templates\store\cart.html:118
+msgid "Have coupon?"
+msgstr ""
+
+#: .\templates\store\cart.html:125
+msgid "Coupon code"
+msgstr ""
+
+#: .\templates\store\cart.html:127 .\templates\store\store.html:136
+msgid "Apply"
+msgstr ""
+
+#: .\templates\store\cart.html:139
+msgid "Coupon"
+msgstr ""
+
+#: .\templates\store\cart.html:140
+msgid "applied."
+msgstr ""
+
+#: .\templates\store\cart.html:149
+msgid "Total price"
+msgstr ""
+
+#: .\templates\store\cart.html:155
+msgid "Discount"
+msgstr ""
+
+#: .\templates\store\cart.html:161
+msgid "Tax"
+msgstr ""
+
+#: .\templates\store\cart.html:167
+msgid "Total"
+msgstr ""
+
+#: .\templates\store\cart.html:188
+msgid "Your Shopping Cart is Empty"
+msgstr ""
+
+#: .\templates\store\cart.html:191
+msgid "Continue Shopping"
+msgstr ""
+
+#: .\templates\store\cart.html:199
+msgid "Payment and refund policy"
+msgstr ""
+
+#: .\templates\store\cart.html:201
+msgid ""
+"\n"
+"                We use SSLCommerz, a secure and trusted payment gateway, to "
+"process all payments on our platform. Payments can be made using supported "
+"methods such as debit cards, credit cards, mobile banking, and other options "
+"provided by SSLCommerz.\n"
+"                All transactions are encrypted and processed securely. We do "
+"not store or have access to your card or payment credentials. Once a payment "
+"is successfully completed, an order confirmation will be generated "
+"automatically.\n"
+"                In case of a failed or interrupted transaction, the amount "
+"will not be deducted. If any amount is deducted due to a technical issue, it "
+"will be automatically reversed by the payment provider within the stipulated "
+"time.\n"
+"                "
+msgstr ""
+
+#: .\templates\store\cart.html:208
+msgid ""
+"\n"
+"                Refunds are processed in accordance with our refund "
+"eligibility rules and SSLCommerz payment guidelines.\n"
+"                Refund requests must be submitted within the specified time "
+"frame after placing the order.\n"
+"                Approved refunds will be processed through the original "
+"payment method used during checkout.\n"
+"                The refund processing time depends on SSLCommerz and the "
+"issuing bank or mobile financial service provider.\n"
+"                Partial refunds may apply depending on the product, service, "
+"or usage status.\n"
+"                Any transaction fees charged by the payment gateway or banks "
+"may be non-refundable.\n"
+"                We reserve the right to reject refund requests if the order "
+"does not meet our refund conditions or if fraudulent activity is suspected.\n"
+"                "
+msgstr ""
+
+#: .\templates\store\product_detail.html:64
+msgid "High quality material"
+msgstr ""
+
+#: .\templates\store\product_detail.html:67
+msgid "Excellent build quality"
+msgstr ""
+
+#: .\templates\store\product_detail.html:70
+msgid "Long lasting and durable"
+msgstr ""
+
+#: .\templates\store\product_detail.html:75
+msgid "Available Size"
+msgstr ""
+
+#: .\templates\store\product_detail.html:88
+msgid "Color"
+msgstr ""
+
+#: .\templates\store\product_detail.html:126
 msgid "Out of Stock"
 msgstr ""
 
-#: .\templates\store\product_detail.html:129
+#: .\templates\store\product_detail.html:132
 msgid "Add to cart"
 msgstr ""
 
-#: .\templates\store\product_detail.html:152
+#: .\templates\store\product_detail.html:155
 msgid "Write Your Review"
 msgstr ""
 
-#: .\templates\store\product_detail.html:155
+#: .\templates\store\product_detail.html:158
 msgid "How do you rate this product?"
 msgstr ""
 
-#: .\templates\store\product_detail.html:180
+#: .\templates\store\product_detail.html:183
 msgid "Review Title:"
 msgstr ""
 
-#: .\templates\store\product_detail.html:183
+#: .\templates\store\product_detail.html:186
 msgid "Review:"
 msgstr ""
 
-#: .\templates\store\product_detail.html:188
+#: .\templates\store\product_detail.html:191
 msgid "Submit Review"
 msgstr ""
 
-#: .\templates\store\product_detail.html:190
+#: .\templates\store\product_detail.html:193
 msgid "You must purchase this product to post a review."
 msgstr ""
 
-#: .\templates\store\product_detail.html:194
+#: .\templates\store\product_detail.html:197
 msgid "You must be logged in to post a review."
 msgstr ""
 
-#: .\templates\store\product_detail.html:194
+#: .\templates\store\product_detail.html:197
 msgid "Login now"
 msgstr ""
 
-#: .\templates\store\product_detail.html:200
+#: .\templates\store\product_detail.html:203
 msgid "Customer Reviews"
 msgstr ""
 
-#: .\templates\store\store.html:171
+#: .\templates\store\store.html:11
+msgid "Category"
+msgstr ""
+
+#: .\templates\store\store.html:15
+msgid "Products"
+msgstr ""
+
+#: .\templates\store\store.html:57
+msgid "Categories"
+msgstr ""
+
+#: .\templates\store\store.html:89
+msgid "Price range"
+msgstr ""
+
+#: .\templates\store\store.html:115
+msgid "Min"
+msgstr ""
+
+#: .\templates\store\store.html:125
+msgid "Max"
+msgstr ""
+
+#: .\templates\store\store.html:149
+msgid "Sizes"
+msgstr ""
+
+#: .\templates\store\store.html:175
 msgid "Items found"
 msgstr ""
 
-#: .\templates\store\store.html:213
+#: .\templates\store\store.html:186
+msgid "List view"
+msgstr ""
+
+#: .\templates\store\store.html:194
+msgid "Grid view"
+msgstr ""
+
+#: .\templates\store\store.html:219
 msgid "No products found matching the selected criteria."
+msgstr ""
+
+#: .\templates\store\store.html:232 .\templates\store\store.html:241
+msgid "Previous"
+msgstr ""
+
+#: .\templates\store\store.html:237
+msgid "First"
+msgstr ""
+
+#: .\templates\store\store.html:257 .\templates\store\store.html:266
+msgid "Next"
+msgstr ""
+
+#: .\templates\store\store.html:262
+msgid "Last"
 msgstr ""

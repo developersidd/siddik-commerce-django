@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 from store.forms import ReviewForm
@@ -9,6 +10,7 @@ from store.models import Product, ProductGallery, ReviewRating, Variation
 # store view
 def store(request, category_slug=None):
     category_slugs = request.GET.getlist("category_slug") or None
+    keyword = request.GET.get("keyword", None)
     sizes = request.GET.getlist("size") or None
     store_max_price = "1000000"
     min_price = request.GET.get("min_price", "0")
@@ -49,7 +51,11 @@ def store(request, category_slug=None):
 
     # Apply price filter
     products = products.filter(price__gte=min_price_int, price__lte=max_price_int)
-
+    
+    # Apply keyword search
+    if keyword and len(keyword) > 0:
+        products = products.filter(Q    (product_name__icontains=keyword) | Q(description__icontains=keyword))
+    
     # Apply sorting
     sort_field = SORT_OPTIONS[sort_by][1]
     products = products.order_by(sort_field)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-26 14:19+0600\n"
+"POT-Creation-Date: 2025-12-27 15:39+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,35 +26,35 @@ msgstr ""
 msgid "Bangla"
 msgstr "বাংলা"
 
-#: .\store\views.py:20
+#: .\store\views.py:22
 msgid "Title"
 msgstr "প্রোডাক্ট নাম"
 
-#: .\store\views.py:21
+#: .\store\views.py:23
 msgid "Latest Items"
 msgstr "নতুন পণ্য"
 
-#: .\store\views.py:22
+#: .\store\views.py:24
 msgid "Cheapest"
 msgstr "কমদামি"
 
-#: .\store\views.py:23
+#: .\store\views.py:25
 msgid "Most Popular"
 msgstr "সবচেয়ে জনপ্রিয়"
 
-#: .\store\views.py:24
+#: .\store\views.py:26
 msgid "Highest Rated"
 msgstr "সর্বোচ্চ গুণমান পণ্য"
 
-#: .\store\views.py:25
+#: .\store\views.py:27
 msgid "Expensive"
 msgstr "দামী"
 
-#: .\store\views.py:26
+#: .\store\views.py:28
 msgid "Oldest Items"
 msgstr "পুরাতন পণ্য"
 
-#: .\store\views.py:27
+#: .\store\views.py:29
 msgid "Trending"
 msgstr "প্রচলিত পণ্য"
 
@@ -66,97 +66,467 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: .\templates\store\product_detail.html:10
+#: .\templates\includes\footer.html:11
+msgid ""
+"Your one-stop shop for all your needs. We offer a wide range of products at "
+"unbeatable prices, ensuring quality and customer satisfaction every step of "
+"the way."
+msgstr "আপনার সকল প্রয়োজনের জন্য এক-স্টপ শপ। আমরা সেরা দামে মানসম্মত পণ্য সরবরাহ করি এবং প্রতিটি ধাপে গ্রাহক সন্তুষ্টি নিশ্চিত করি।"
+
+#: .\templates\includes\footer.html:19
+msgid "Brands"
+msgstr "ব্র্যান্ডসমূহ"
+
+#: .\templates\includes\footer.html:22
+msgid "Adidas"
+msgstr "অ্যাডিডাস"
+
+#: .\templates\includes\footer.html:25
+msgid "Puma"
+msgstr "পুমা"
+
+#: .\templates\includes\footer.html:28
+msgid "Reebok"
+msgstr "রিবক"
+
+#: .\templates\includes\footer.html:31
+msgid "Nike"
+msgstr "নাইকি"
+
+#: .\templates\includes\footer.html:36
+msgid "Company"
+msgstr "কোম্পানি"
+
+#: .\templates\includes\footer.html:39
+msgid "About us"
+msgstr "আমাদের সম্পর্কে"
+
+#: .\templates\includes\footer.html:42
+msgid "Career"
+msgstr "ক্যারিয়ার"
+
+#: .\templates\includes\footer.html:45
+msgid "Find a store"
+msgstr "স্টোর খুঁজুন"
+
+#: .\templates\includes\footer.html:48
+msgid "Rules and terms"
+msgstr "নিয়ম এবং শর্তাবলী"
+
+#: .\templates\includes\footer.html:51
+msgid "Sitemap"
+msgstr "সাইটম্যাপ"
+
+#: .\templates\includes\footer.html:56
+msgid "Help"
+msgstr "সাহায্য"
+
+#: .\templates\includes\footer.html:59
+msgid "Contact us"
+msgstr "যোগাযোগ করুন"
+
+#: .\templates\includes\footer.html:62
+msgid "Money refund"
+msgstr "টাকা ফেরত"
+
+#: .\templates\includes\footer.html:65
+msgid "Order status"
+msgstr "অর্ডারের অবস্থা"
+
+#: .\templates\includes\footer.html:68
+#, fuzzy
+#| msgid "Shopping cart"
+msgid "Shipping info"
+msgstr "শিপিং তথ্য"
+
+#: .\templates\includes\footer.html:71
+msgid "Open dispute"
+msgstr "বিতর্ক খুলুন"
+
+#: .\templates\includes\footer.html:76
+msgid "Social"
+msgstr "সামাজিক"
+
+#: .\templates\includes\footer.html:79
+msgid "Facebook"
+msgstr "ফেসবুক"
+
+#: .\templates\includes\footer.html:82
+msgid "X"
+msgstr "এক্স"
+
+#: .\templates\includes\footer.html:85
+msgid "Instagram"
+msgstr "ইনস্টাগ্রাম"
+
+#: .\templates\includes\footer.html:88
+msgid "Youtube"
+msgstr "ইউটিউব"
+
+#: .\templates\includes\footer.html:98
+msgid "  &copy 2025 Siddik Ecommerce "
+msgstr "  &copy ২০২৫ সিদ্দিক ইকমার্স "
+
+#: .\templates\includes\footer.html:103
+msgid "Dhaka, Bangladesh"
+msgstr "ঢাকা, বাংলাদেশ"
+
+#: .\templates\includes\header.html:8 .\templates\store\product_detail.html:12
+#: .\templates\store\store.html:20
 msgid "Home"
 msgstr "হোম"
 
-#: .\templates\store\product_detail.html:13
+#: .\templates\includes\header.html:11 .\templates\store\product_detail.html:16
+#: .\templates\store\store.html:13 .\templates\store\store.html:23
 msgid "Store"
 msgstr "স্টোর"
 
-#: .\templates\store\product_detail.html:56
-#: .\templates\store\product_detail.html:202
+#: .\templates\includes\header.html:14
+msgid "Cart"
+msgstr "কার্ট"
+
+#: .\templates\includes\header.html:26
+msgid "Call"
+msgstr "ফোন"
+
+#: .\templates\includes\header.html:82 .\templates\includes\header.html:85
+#: .\templates\simple-base.html:52 .\templates\simple-base.html:55
+msgid "Search"
+msgstr "সার্চ"
+
+#: .\templates\includes\header.html:110 .\templates\simple-base.html:82
+msgid "Welcome Guest"
+msgstr "স্বাগতম মেহমান"
+
+#: .\templates\includes\header.html:115 .\templates\simple-base.html:87
+msgid "Logout"
+msgstr "প্রস্থান"
+
+#: .\templates\includes\header.html:119 .\templates\simple-base.html:91
+msgid "Sign in"
+msgstr "সাইন ইন"
+
+#: .\templates\includes\header.html:120 .\templates\simple-base.html:92
+msgid "Register"
+msgstr "রেজিস্টার"
+
+#: .\templates\includes\header.html:145
+msgid "All category"
+msgstr "সব ক্যাটাগরি"
+
+#: .\templates\includes\product-card.html:9
+msgid "Quick view"
+msgstr "বিস্তারিত দেখুন"
+
+#: .\templates\includes\product-card.html:47
+#: .\templates\includes\product-large-card.html:36
+#: .\templates\store\product_detail.html:59
+#: .\templates\store\product_detail.html:205
 msgid "reviews"
 msgstr "পর্যালোচনা"
 
-#: .\templates\store\product_detail.html:61
-msgid "High quality material"
-msgstr "উচ্চ মানের উপাদান"
+#: .\templates\includes\product-card.html:63
+#, fuzzy
+#| msgid "Add to cart"
+msgid "Add to Cart"
+msgstr "কার্টে যোগ করুন"
 
-#: .\templates\store\product_detail.html:64
-msgid "Excellent build quality"
-msgstr "চমৎকার বিল্ড মান"
+#: .\templates\includes\product-large-card.html:59
+msgid "Details"
+msgstr "বিস্তারিত"
 
-#: .\templates\store\product_detail.html:67
-msgid "Long lasting and durable"
-msgstr "দীর্ঘস্থায়ী এবং টেকসই"
+#: .\templates\includes\product-large-card.html:61
+#, fuzzy
+#| msgid "Add to cart"
+msgid "Add to wishlist"
+msgstr "কার্টে যোগ করুন"
 
-#: .\templates\store\product_detail.html:72
-msgid "Available Size"
-msgstr "ব্যবহারযোগ্য সাইজ"
+#: .\templates\simple-base.html:120
+msgid "Copyright 2025 All rights reserved"
+msgstr "কপিরাইট ২০২৫ সর্বস্বত্ব সংরক্ষিত।"
 
-#: .\templates\store\product_detail.html:85
-msgid "Color"
-msgstr "রঙ"
+#: .\templates\simple-base.html:122
+msgid "Terms and conditions"
+msgstr "শর্তাবলী"
 
-#: .\templates\store\product_detail.html:97
+#: .\templates\store\cart.html:9
+msgid "Shopping cart"
+msgstr "শপিং কার্ট"
+
+#: .\templates\store\cart.html:22
+msgid "Product"
+msgstr "প্রোডাক্ট"
+
+#: .\templates\store\cart.html:23 .\templates\store\product_detail.html:100
 msgid "Quantity"
 msgstr "পরিমান"
 
-#: .\templates\store\product_detail.html:123
+#: .\templates\store\cart.html:24
+msgid "Price"
+msgstr "দাম"
+
+#: .\templates\store\cart.html:77
+msgid "each"
+msgstr "প্রতিটা"
+
+#: .\templates\store\cart.html:90
+msgid "Remove"
+msgstr "সরিয়ে ফেলুন"
+
+#: .\templates\store\cart.html:97
+msgid "Make Purchase"
+msgstr "পেমেন্ট করুন"
+
+#: .\templates\store\cart.html:99
+msgid "Continue shopping"
+msgstr "কেনাকাটা চালিয়ে যান"
+
+#: .\templates\store\cart.html:118
+msgid "Have coupon?"
+msgstr "কোন কুপন আছে?"
+
+#: .\templates\store\cart.html:125
+msgid "Coupon code"
+msgstr "কুপন কোড"
+
+#: .\templates\store\cart.html:127 .\templates\store\store.html:136
+msgid "Apply"
+msgstr "আবেদন করুন"
+
+#: .\templates\store\cart.html:139
+msgid "Coupon"
+msgstr "কুপন"
+
+#: .\templates\store\cart.html:140
+msgid "applied."
+msgstr "আবেদন করা হয়েছে"
+
+#: .\templates\store\cart.html:149
+msgid "Total price"
+msgstr "মোট দাম"
+
+#: .\templates\store\cart.html:155
+msgid "Discount"
+msgstr "ছাড়"
+
+#: .\templates\store\cart.html:161
+msgid "Tax"
+msgstr "ট্যাক্স"
+
+#: .\templates\store\cart.html:167
+msgid "Total"
+msgstr "মোট"
+
+#: .\templates\store\cart.html:188
+msgid "Your Shopping Cart is Empty"
+msgstr "আপনার শপিং কার্ট খালি।"
+
+#: .\templates\store\cart.html:191
+msgid "Continue Shopping"
+msgstr ""
+
+#: .\templates\store\cart.html:199
+msgid "Payment and refund policy"
+msgstr "অর্থপ্রদান এবং ফেরত নীতি"
+
+#: .\templates\store\cart.html:201
+msgid ""
+"\n"
+"                We use SSLCommerz, a secure and trusted payment gateway, to "
+"process all payments on our platform. Payments can be made using supported "
+"methods such as debit cards, credit cards, mobile banking, and other options "
+"provided by SSLCommerz.\n"
+"                All transactions are encrypted and processed securely. We do "
+"not store or have access to your card or payment credentials. Once a payment "
+"is successfully completed, an order confirmation will be generated "
+"automatically.\n"
+"                In case of a failed or interrupted transaction, the amount "
+"will not be deducted. If any amount is deducted due to a technical issue, it "
+"will be automatically reversed by the payment provider within the stipulated "
+"time.\n"
+"                "
+msgstr ""
+"\n"
+"                আমরা আমাদের প্ল্যাটফর্মে সকল পেমেন্ট প্রক্রিয়াকরণের জন্য SSLCommerz "
+"ব্যবহার করি, যা একটি নিরাপদ ও বিশ্বস্ত পেমেন্ট গেটওয়ে। গ্রাহকরা ডেবিট কার্ড, "
+"ক্রেডিট কার্ড, মোবাইল ব্যাংকিং এবং SSLCommerz দ্বারা সমর্থিত অন্যান্য পেমেন্ট পদ্ধতির "
+"মাধ্যমে পেমেন্ট করতে পারবেন।\n"
+"                সকল লেনদেন এনক্রিপ্টেড এবং নিরাপদভাবে সম্পন্ন হয়। আমরা আপনার "
+"কার্ড বা পেমেন্ট সংক্রান্ত কোনো তথ্য সংরক্ষণ করি না এবং এসব তথ্যের উপর আমাদের কোনো "
+"অ্যাক্সেস নেই। পেমেন্ট সফলভাবে সম্পন্ন হলে স্বয়ংক্রিয়ভাবে একটি অর্ডার কনফার্মেশন "
+"জেনারেট করা হবে।\n"
+"                কোনো পেমেন্ট ব্যর্থ হলে বা লেনদেন অসম্পূর্ণ থাকলে আপনার অ্যাকাউন্ট "
+"থেকে কোনো অর্থ কাটা হবে না। যদি কোনো প্রযুক্তিগত সমস্যার কারণে অর্থ কেটে নেওয়া হয়, "
+"তাহলে নির্ধারিত সময়ের মধ্যে পেমেন্ট প্রদানকারী স্বয়ংক্রিয়ভাবে সেই অর্থ ফেরত প্রদান "
+"করবে।\n"
+"                "
+
+#: .\templates\store\cart.html:208
+msgid ""
+"\n"
+"                Refunds are processed in accordance with our refund "
+"eligibility rules and SSLCommerz payment guidelines.\n"
+"                Refund requests must be submitted within the specified time "
+"frame after placing the order.\n"
+"                Approved refunds will be processed through the original "
+"payment method used during checkout.\n"
+"                The refund processing time depends on SSLCommerz and the "
+"issuing bank or mobile financial service provider.\n"
+"                Partial refunds may apply depending on the product, service, "
+"or usage status.\n"
+"                Any transaction fees charged by the payment gateway or banks "
+"may be non-refundable.\n"
+"                We reserve the right to reject refund requests if the order "
+"does not meet our refund conditions or if fraudulent activity is suspected.\n"
+"                "
+msgstr ""
+"\n"
+"                আমাদের রিফান্ড নীতিমালা এবং SSLCommerz এর পেমেন্ট গাইডলাইনের "
+"অনুসারে রিফান্ড প্রক্রিয়া সম্পন্ন করা হয়।\n"
+"                অর্ডার করার পর নির্ধারিত সময়সীমার মধ্যে রিফান্ডের জন্য অনুরোধ জমা "
+"দিতে হবে।\n"
+"                অনুমোদিত রিফান্ড চেকআউটের সময় ব্যবহৃত মূল পেমেন্ট পদ্ধতির মাধ্যমেই "
+"প্রদান করা হবে।\n"
+"                রিফান্ড প্রক্রিয়াকরণের সময় SSLCommerz এবং সংশ্লিষ্ট ব্যাংক বা "
+"মোবাইল ফাইন্যান্সিয়াল সার্ভিস প্রদানকারীর উপর নির্ভর করে।\n"
+"                পণ্য, সেবা বা ব্যবহারের অবস্থার উপর ভিত্তি করে আংশিক রিফান্ড "
+"প্রযোজ্য হতে পারে।\n"
+"                পেমেন্ট গেটওয়ে বা ব্যাংক কর্তৃক ধার্যকৃত কোনো লেনদেন ফি ফেরতযোগ্য "
+"নাও হতে পারে।\n"
+"                অর্ডার আমাদের রিফান্ড শর্ত পূরণ না করলে অথবা কোনো ধরনের "
+"প্রতারণামূলক কার্যক্রম সন্দেহ হলে আমরা রিফান্ড অনুরোধ বাতিল করার অধিকার সংরক্ষণ "
+"করি।\n"
+"                "
+
+#: .\templates\store\product_detail.html:64
+msgid "High quality material"
+msgstr "উচ্চ মানের উপাদান"
+
+#: .\templates\store\product_detail.html:67
+msgid "Excellent build quality"
+msgstr "চমৎকার বিল্ড মান"
+
+#: .\templates\store\product_detail.html:70
+msgid "Long lasting and durable"
+msgstr "দীর্ঘস্থায়ী এবং টেকসই"
+
+#: .\templates\store\product_detail.html:75
+msgid "Available Size"
+msgstr "ব্যবহারযোগ্য সাইজ"
+
+#: .\templates\store\product_detail.html:88
+msgid "Color"
+msgstr "রঙ"
+
+#: .\templates\store\product_detail.html:126
 msgid "Out of Stock"
 msgstr "স্টক আউট"
 
-#: .\templates\store\product_detail.html:129
+#: .\templates\store\product_detail.html:132
 msgid "Add to cart"
 msgstr "কার্টে যোগ করুন"
 
-#: .\templates\store\product_detail.html:152
+#: .\templates\store\product_detail.html:155
 msgid "Write Your Review"
 msgstr "আপনার পর্যালোচনা লিখুন"
 
-#: .\templates\store\product_detail.html:155
+#: .\templates\store\product_detail.html:158
 msgid "How do you rate this product?"
 msgstr "আপনি এই পণ্যটিকে কীভাবে মূল্যায়ন করেন?"
 
-#: .\templates\store\product_detail.html:180
+#: .\templates\store\product_detail.html:183
 msgid "Review Title:"
 msgstr "পর্যালোচনা শিরোনাম"
 
-#: .\templates\store\product_detail.html:183
+#: .\templates\store\product_detail.html:186
 msgid "Review:"
 msgstr "পর্যালোচনা"
 
-#: .\templates\store\product_detail.html:188
+#: .\templates\store\product_detail.html:191
 msgid "Submit Review"
 msgstr "পর্যালোচনা জমা দিন"
 
-#: .\templates\store\product_detail.html:190
+#: .\templates\store\product_detail.html:193
 msgid "You must purchase this product to post a review."
 msgstr "পর্যালোচনা পোস্ট করার জন্য আপনাকে এই পণ্যটি কিনতে হবে।."
 
-#: .\templates\store\product_detail.html:194
+#: .\templates\store\product_detail.html:197
 msgid "You must be logged in to post a review."
 msgstr "পর্যালোচনা পোস্ট করার জন্য আপনাকে লগইন করতে হবে।"
 
-#: .\templates\store\product_detail.html:194
+#: .\templates\store\product_detail.html:197
 msgid "Login now"
 msgstr "লগইন করুন"
 
-#: .\templates\store\product_detail.html:200
+#: .\templates\store\product_detail.html:203
 msgid "Customer Reviews"
 msgstr "গ্রাহক পর্যালোচনা"
 
-#: .\templates\store\store.html:171
+#: .\templates\store\store.html:11
+msgid "Category"
+msgstr "ক্যাটাগরি"
+
+#: .\templates\store\store.html:15
+msgid "Products"
+msgstr "প্রোডাক্ট"
+
+#: .\templates\store\store.html:57
+msgid "Categories"
+msgstr "ক্যাটাগরি"
+
+#: .\templates\store\store.html:89
+msgid "Price range"
+msgstr "মূল্য পরিসীমা"
+
+#: .\templates\store\store.html:115
+msgid "Min"
+msgstr "সর্বনিম্ন"
+
+#: .\templates\store\store.html:125
+msgid "Max"
+msgstr "সর্বনিম্ন"
+
+#: .\templates\store\store.html:149
+msgid "Sizes"
+msgstr "মাপ"
+
+#: .\templates\store\store.html:175
 msgid "Items found"
 msgstr "আইটেম পাওয়া গেছে"
 
-#: .\templates\store\store.html:213
+#: .\templates\store\store.html:186
+#, fuzzy
+#| msgid "Submit Review"
+msgid "List view"
+msgstr "পর্যালোচনা জমা দিন"
+
+#: .\templates\store\store.html:194
+#, fuzzy
+#| msgid "reviews"
+msgid "Grid view"
+msgstr "পর্যালোচনা"
+
+#: .\templates\store\store.html:219
 msgid "No products found matching the selected criteria."
 msgstr "কোন পণ্য পাওয়া যায়নি"
 
-#~ msgid "Products"
-#~ msgstr "প্রোডাক্ট"
+#: .\templates\store\store.html:232 .\templates\store\store.html:241
+#, fuzzy
+#| msgid "reviews"
+msgid "Previous"
+msgstr "পূর্ববর্তী"
+
+#: .\templates\store\store.html:237
+msgid "First"
+msgstr "প্রথম"
+
+#: .\templates\store\store.html:257 .\templates\store\store.html:266
+msgid "Next"
+msgstr "পরবর্তী"
+
+#: .\templates\store\store.html:262
+msgid "Last"
+msgstr "শেষ"
 
 #~ msgid "No products found"
 #~ msgstr "কোন পণ্য পাওয়া যায়নি"

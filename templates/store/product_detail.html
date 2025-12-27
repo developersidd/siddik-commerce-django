@@ -8,12 +8,10 @@
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="{% url 'home' %}">
-                            {% trans "Home" %} </a>
+                        <a href="{% url 'home' %}">{% trans "Home" %}</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{% url 'store' %}">
-                            {% trans "Store" %}</a>
+                        <a href="{% url 'store' %}">{% trans "Store" %}</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">{{ product.product_name }}</li>
                 </ol>
@@ -27,25 +25,25 @@
                 {% comment %} product id {% endcomment %}
                 <div class="card">
                     <div class="row no-gutters">
-                        <aside class="col-sm-6 border-right">
+                        <aside class="col-md-6">
                             <article class="gallery-wrap">
                                 <div class="img-big-wrap mainImage">
-                                    <a href="#">
-                                        <img src="{{ product.images.url }}">
-                                    </a>
+                                    <center>
+                                        <img src="{{ product.images.url }}" />
+                                    </center>
                                 </div>
                                 <!-- img-big-wrap.// -->
-                                <div class="thumbs-wrap">
-                                    {% for photo in product_photos %}
-                                        <a href="#" class="item-thumb">
-                                            <img src="{{ photo.image.url }}"
-                                                 alt="{{ product.product_name }}"
-                                                 target="mainImage">
+                            </article>
+                            <!-- gallery-wrap .end// -->
+                            <ul class="thumb">
+                                <li>
+                                    {% for i in product_photos %}
+                                        <a href="{{ i.image.url }}" target="mainImage">
+                                            <img src="{{ i.image.url }}" alt="Product Image" />
                                         </a>
                                     {% endfor %}
-                                </div>
-                                <!-- thumbs-wrap.// -->
-                            </article> <!-- gallery-wrap .end// -->
+                                </li>
+                            </ul>
                         </aside>
                         <main class="col-sm-6">
                             <article class="content-body">
@@ -58,18 +56,12 @@
                         </div>
                         <p>{{ product.description }}</p>
                         <ul class="list-check mb-4">
-                            <li>
-                            {% trans "High quality material" %}
-                            </li>
-                            <li>
-                            {% trans "Excellent build quality" %}
-                            </li>
-                            <li>
-                            {% trans "Long lasting and durable" %}
-                            </li>
+                            <li>{% trans "High quality material" %}</li>
+                            <li>{% trans "Excellent build quality" %}</li>
+                            <li>{% trans "Long lasting and durable" %}</li>
                         </ul>
-                        {% if product.variation.sizes|length > 0 %}
-                            <div class="item-option-select">
+                        {% if product.variations.sizes|length > 0 %}
+                            <div class="item-option-select mt-3">
                                 <h6>{% trans "Available Size" %}</h6>
                                 <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
                                     {% for v in product.variations.sizes %}
@@ -81,7 +73,7 @@
                                 </div>
                             </div>
                         {% endif %}
-                        {% if product.variation.colors|length > 0 %}
+                        {% if product.variations.colors|length > 0 %}
                             <div class="item-option-select">
                                 <h6>{% trans "Color" %}</h6>
                                 <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
@@ -94,7 +86,7 @@
                                 </div>
                             </div>
                         {% endif %}
-                        <div>
+                        <div class=" mt-4">
                             <h6>{% trans "Quantity" %}</h6>
                             <div class="form-group col-md flex-grow-0">
                                 <div class="input-group mb-3 input-spinner">
@@ -183,7 +175,9 @@
                     <br />
                     {% if user.is_authenticated %}
                         {% if not orderproduct %}
-                            <input type="submit" value="{% trans "Submit Review" %}" class="btn btn-primary">
+                            <input type="submit"
+                                   value="{% trans "Submit Review" %}"
+                                   class="btn btn-primary">
                         {% else %}
                             <p class="bold">{% trans "You must purchase this product to post a review." %}</p>
                         {% endif %}
@@ -197,9 +191,7 @@
             <header class="section-heading">
                 <h3>{% trans "Customer Reviews" %}</h3>
                 <div class="rating-wrap">
-                    <strong class="label-rating text-lg"> {{ product.averageReview }} <span class="text-muted">| {{ product.countReview }}  {% trans "reviews" %}
-
-                    </span></strong>
+                    <strong class="label-rating text-lg"> {{ product.averageReview }} <span class="text-muted">| {{ product.countReview }}  {% trans "reviews" %}</span></strong>
                 </div>
             </header>
             {% for review in reviews %}
@@ -242,4 +234,12 @@
 </div>
 </div>
 </section>
+<script>
+    $(document).ready(function() {
+        $(".thumb a").click(function(e) {
+            e.preventDefault()
+            $(".mainImage img").attr("src", $(this).attr("href"))
+        })
+    })
+</script>
 {% endblock content %}
