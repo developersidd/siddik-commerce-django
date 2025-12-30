@@ -274,13 +274,11 @@ class ProductView(models.Model):
             models.Index(fields=["-viewed_at", "session_key"]),
         ]
 
-
 # Variation Choices
 variation_category_choices = (
     ("color", "color"),
     ("size", "size"),
 )
-
 
 # Variation Manager
 class VariationManager(models.Manager):

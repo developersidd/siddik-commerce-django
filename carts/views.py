@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django_countries import countries
 from alistyle.utils import get_session_key
 from carts.models import Cart, CartItem
 from carts.utils import (
@@ -33,17 +34,17 @@ def cart(request, total=0, quantity=0, cart_items=None):
         for item in cart_items:
             total += item.product.final_price() * item.quantity
             quantity += item.quantity
-        if  current_user.is_authenticated:
+        if current_user.is_authenticated:
             if coupon_usage_id:
                 coupon_usage = CouponUsage.objects.filter(
                     user=current_user, id=coupon_usage_id
                 ).first()
             else:
                 coupon_usage = (
-                CouponUsage.objects.filter(user=current_user, is_used=False)
-                .order_by("-used_at")
-                .first()
-            )
+                    CouponUsage.objects.filter(user=current_user, is_used=False)
+                    .order_by("-used_at")
+                    .first()
+                )
         if coupon_usage and total > coupon_usage.discount_amount:
             coupon_discount_amount = coupon_usage.discount_amount
         tax = math.ceil((2 * total) / 100)
@@ -61,7 +62,9 @@ def cart(request, total=0, quantity=0, cart_items=None):
         "grand_total": total + tax,
         "quantity": quantity,
         "discount": coupon_discount_amount,
-        "applied_coupon_code": coupon_usage.coupon.coupon_code if coupon_usage is not None else "",
+        "applied_coupon_code": (
+            coupon_usage.coupon.coupon_code if coupon_usage is not None else ""
+        ),
         "tax": tax,
         "grand_total": grand_total,
     }
@@ -166,8 +169,10 @@ def checkout(request):
         current_user = request.user
         cart = get_or_create_cart(request)
         cart_items = get_cart_items(current_user, cart)
-
-        context = {"cart_items": cart_items}
+        user_profile = None
+        if request.user.is_authenticated:
+            user_profile = current_user.user_profile
+        context = {"cart_items": cart_items, "user_profile": user_profile}
         return render(request, "store/checkout.html", context)
     except Exception as e:
         print("🐍 File: carts/views.py | Line: 165 | checkout ~ e", e)

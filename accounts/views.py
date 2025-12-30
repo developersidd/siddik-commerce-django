@@ -27,18 +27,11 @@ from carts.utils import (
 @unauthenticated_user
 def register(request):
     if request.method == "POST":
+        current_language = request.LANGUAGE_CODE
         form = RegistrationForm(request.POST)
         if form.is_valid():
             cleaned_data = form.cleaned_data
-            print(
-                "🐍 File: accounts/views.py | Line: 14 | register ~ cleaned_data",
-                cleaned_data,
-            )
             first_name = cleaned_data["first_name"]
-            print(
-                "🐍 File: accounts/views.py | Line: 16 | register ~ first_name",
-                first_name,
-            )
             last_name = cleaned_data["last_name"]
             email = cleaned_data["email"]
             username = email.split("@")[0]
@@ -80,8 +73,8 @@ def register(request):
             )
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
-            return redirect(f"accounts/login/?command=verification&email={email}")
+            send_email.send()            
+            return redirect(f"/{current_language}/accounts/login/?command=verification&email={email}")
         else:
             print("Error", form.errors)
     else:

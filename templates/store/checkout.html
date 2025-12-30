@@ -1,5 +1,6 @@
 {% extends "simple-base.html" %}
 {% load static %}
+{% load i18n %}
 {% block content %}
   <section class="section-content padding-y bg">
     <div class="container">
@@ -17,81 +18,78 @@
             <i class="fas fa-check"></i>
           </div>
           <div class="step-title">
-            <a href="{% url "cart" %}">Cart</a>
+            <a href="{% url "cart" %}">{% trans "Cart" %}</a>
           </div>
         </div>
         <div class="step-horizontal active">
           <div class="step-icon">
             <i class="fas fa-user"></i>
           </div>
-          <div class="step-title">Shipping</div>
+          <div class="step-title">{% trans "Shipping" %}</div>
         </div>
         <div class="step-horizontal">
           <div class="step-icon">
             <i class="fas fa-credit-card"></i>
           </div>
-          <div class="step-title">Payment</div>
+          <div class="step-title">{% trans "Payment" %}</div>
         </div>
         <div class="step-horizontal">
           <div class="step-icon">
             <i class="fas fa-flag"></i>
           </div>
-          <div class="step-title">Confirmation</div>
+          <div class="step-title">{% trans "Confirmation" %}</div>
         </div>
       </div>
       <div class="row">
         <aside class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title mb-4">Shipping Address</h4>
+              <h4 class="card-title mb-4">{% trans "Shipping Address" %}</h4>
               <form action="{% url 'place_order' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-row">
                   <div class="col form-group">
-                    <label for="">First Name</label>
-                    <input type="text" name="first_name" class="form-control" required>
+                    <label for="">{% trans "First Name" %}</label>
+                    <input value="{{ request.user.first_name }}" type="text" name="first_name" class="form-control" required>
                   </div>
                   <div class="col form-group">
-                    <label for="">Last Name</label>
-                    <input type="text" name="last_name" class="form-control" required>
+                    <label for="">{% trans "Last Name" %}</label>
+                    <input value="{{ request.user.last_name }}" type="text" name="last_name" class="form-control" required>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="col form-group">
-                    <label for="">Email</label>
-                    <input type="email" name="email" class="form-control" required>
+                    <label for="">{% trans "Email" %}</label>
+                    <input value="{{ request.user.email }}" type="email" name="email" class="form-control" required>
                   </div>
                   <div class="col form-group">
-                    <label for="">Phone Number</label>
-                    <input type="text" name="phone" class="form-control" required>
+                    <label for="">{% trans "Phone Number" %}</label>
+                    <input value="{{ request.user.phone_number }}" type="text" name="phone" class="form-control" required>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="col form-group">
-                    <label for="">Address Line 1</label>
-                    <input type="text" name="address_line_1" class="form-control" required>
+                    <label for="">{% trans "Address Line 1" %}</label>
+                    <input value="{{ user_profile.address_line_1 }}" type="text" name="address_line_1" class="form-control" required>
                   </div>
                   <div class="col form-group">
-                    <label for="">Address Line 2</label>
-                    <input type="text" name="address_line_2" class="form-control">
+                    <label for="">{% trans "Address Line 2" %}</label>
+                    <input value="{{ user_profile.address_line_2 }}" type="text" name="address_line_2" class="form-control">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="col form-group">
-                    <label for="">City</label>
-                    <input type="text" name="city" class="form-control" required>
+                    <label for="">{% trans "City" %}</label>
+                    <input value="{{ user_profile.city }}" type="text" name="city" class="form-control" required>
                   </div>
                   <div class="col form-group">
-                    <label for="">State</label>
-                    <input type="text" name="state" class="form-control" required>
+                    <label for="">{% trans "State" %}</label>
+                    <input value="{{ user_profile.state }}" type="text" name="state" class="form-control" required>
                   </div>
-                  <div class="col form-group">
-                    <label for="">Country</label>
-                    <input type="text" name="country" class="form-control" required>
-                  </div>
+                 
                 </div>
                 <div class="form-row">
-                  <label for="">Order Note</label>
+                  <label for="">{% trans "Order Note" %}</label>
                   <textarea name="order_note" rows="2" class="form-control"></textarea>
                 </div>
               </div>
@@ -105,9 +103,9 @@
                 <table class="table table-borderless table-shopping-cart">
                   <thead class="text-muted">
                     <tr class="small text-uppercase">
-                      <th scope="col">Product</th>
-                      <th scope="col" width="120">Quantity</th>
-                      <th scope="col" width="120">Price</th>
+                      <th scope="col">{% trans "Product" %}</th>
+                      <th scope="col" width="120">{% trans "Quantity" %}</th>
+                      <th scope="col" width="120">{% trans "Price" %}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -137,8 +135,8 @@
                         </td>
                         <td>
                           <div class="price-wrap">
-                            <var class="price">$ {{ cart_item.sub_total }}</var>
-                            <small class="text-muted">$ {{ cart_item.product.price }} each</small>
+                            <var class="price">৳ {{ cart_item.sub_total }}</var>
+                            <small class="text-muted">৳ {{ cart_item.product.price }} {% trans "each" %}</small>
                           </div>
                           <!-- price-wrap .// -->
                         </td>
@@ -146,8 +144,8 @@
                     {% endfor %}
                   </tbody>
                 </table>
-                <button type="submit" name="submit" class="btn btn-primary btn-block">Place Order</button>
-                <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+                <button type="submit" name="submit" class="btn btn-primary btn-block">{% trans "Place Order" %}</button>
+                <a href="{% url 'store' %}" class="btn btn-light btn-block">{% trans "Continue shopping" %}</a>
               </form>
             </div>
             <!-- card-body.// -->

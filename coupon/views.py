@@ -12,16 +12,13 @@ def apply_coupon(request):
         current_user = request.user
         if request.method == "POST":
             coupon_code = request.POST.get("coupon_code", "")
-            # print("🐍 File: coupon/views.py | Line: 12 | apply_coupon ~ coupon_code",coupon_code)
             total = int(request.POST.get("total"))
-            # print("🐍 File: coupon/views.py | Line: 14 | apply_coupon ~ total",total)
             if coupon_code:
                 if not current_user.is_authenticated:
                     messages.error(request, "You must log in to use coupon code")
                     return redirect("cart")
                 coupon = Coupon.objects.filter(coupon_code__iexact=coupon_code).first()
                
-
                 if coupon is not None:
                     if coupon.is_valid(current_user, total):
                         coupon_discount_amount = coupon.calculate_discount(total)
