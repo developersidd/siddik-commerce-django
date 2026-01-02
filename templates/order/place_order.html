@@ -5,46 +5,43 @@
     <section class="section-content padding-y bg">
         <div class="container">
             {% comment %} Steps {% endcomment %}
-             <div class="steps-horizontal mx-auto mt-3 mb-5">
-        <div style="position: absolute;
-                    top: 24px;
-                    width: 400px;
-                    left: 5rem;
-                    right: 0;
-                    border: 2px solid #4361ee;
-                    z-index: 1"></div>
-        <div class="step-horizontal complete">
-          <div class="step-icon">
-            <i class="fas fa-check"></i>
-          </div>
-          <div class="step-title">
-            <a href="{% url "cart" %}">{% trans "Cart" %}</a>
-          </div>
-        </div>
-        <div class="step-horizontal complete">
-          <div class="step-icon">
-            <i class="fas fa-check"></i>
-          </div>
-          <div class="step-title">
-            <a href="{% url "checkout" %}">
-
-                {% trans "Shipping" %}
-            </a>
-        </div>
-        </div>
-        <div class="step-horizontal active">
-          <div class="step-icon">
-            <i class="fas fa-credit-card"></i>
-          </div>
-          <div class="step-title">{% trans "Payment" %}</div>
-        </div>
-        <div class="step-horizontal">
-          <div class="step-icon">
-            <i class="fas fa-flag"></i>
-          </div>
-          <div class="step-title">{% trans "Confirmation" %}</div>
-        </div>
-      </div>
+            <div class="steps-horizontal mx-auto mt-3 mb-5">
+                <div style="position: absolute;
+                            top: 24px;
+                            width: 400px;
+                            left: 5rem;
+                            right: 0;
+                            border: 2px solid #4361ee;
+                            z-index: 1"></div>
+                <div class="step-horizontal complete">
+                    <div class="step-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-title">
+                        <a href="{% url "cart" %}">{% trans "Cart" %}</a>
+                    </div>
+                </div>
+                <div class="step-horizontal complete">
+                    <div class="step-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-title">
+                        <a href="{% url "checkout" %}">{% trans "Shipping" %}</a>
+                    </div>
+                </div>
+                <div class="step-horizontal active">
+                    <div class="step-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="step-title">{% trans "Payment" %}</div>
+                </div>
+                <div class="step-horizontal">
+                    <div class="step-icon">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="step-title">{% trans "Confirmation" %}</div>
+                </div>
+            </div>
             {% comment %}<h4 class="text-center mb-20">{% trans "Review Your Order and Make Payment" %}</h4>{% endcomment %}
             <div class="row">
                 <aside class="col-lg-8">
@@ -56,7 +53,9 @@
                             <p class="card-text mb-0">{{ order.city }}, {{ order.state }}</p>
                             <p class="card-text mb-0">{{ order.email }}</p>
                             <p class="card-text mb-0">{{ order.phone_number }}</p>
-                            {% if order.order_note %}<b>{% trans "Order Note" %}: </b> {{ order.order_note }}{% endif %}
+                            {% if order.order_note %}
+                                <b>{% trans "Order Note" %}: </b> {{ order.order_note }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="card mb-3">
@@ -149,8 +148,9 @@
                                 <input type="hidden" name="order_number" value="{{ order.order_number }}">
                                 <input type="hidden" name="total_amount" value="{{ grand_total }}">
                                 <input type="hidden" name="full_name" value="{{ order.full_name }}">
-                                <button type="submit" class="text-center mb-3">
-                                    <img src="{% static './images/misc/payments.png' %}" height="26">
+                                <button type="submit" class="text-center mt-4 btn btn-primary btn-block ">
+                                    {% comment %}<img src="{% static './images/misc/payments.png' %}" height="26">{% endcomment %}
+                                    <i class="fa fa-credit-card mr-2"></i>  Place Order
                                 </button>
                             </form>
                             <div id="paypal-button-container">
