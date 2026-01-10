@@ -5,11 +5,13 @@ from django.db import models
 from accounts.models import Account
 from store.models import Product, Variation
 
+
 class OrderStatus(models.TextChoices):
-    PENDING = 'PENDING', 'Pending'
-    COMPLETED = 'COMPLETED', 'Completed'
-    FAILED = 'FAILED', 'Failed'
-    REFUNDED = 'REFUNDED', 'Refunded'
+    NEW = "NEW", "New"
+    ACCEPTED = "ACCEPTED", "Accepted"
+    COMPLETED = "COMPLETED", "Completed"
+    CANCELLED = "CANCELLED", "Cancelled"
+
 
 # Create your models here.
 class Order(models.Model):
@@ -25,11 +27,16 @@ class Order(models.Model):
     country = models.CharField(max_length=50)
     order_number = models.CharField(max_length=55)
     order_note = models.TextField(max_length=100, null=True, blank=True)
+    order_subtotal = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
     order_total = models.DecimalField(max_digits=10, decimal_places=2)
     tax = models.FloatField()
     is_ordered = models.BooleanField(default=False)
     ip = models.CharField(max_length=50, blank=True)
-    status = models.CharField(choices=OrderStatus.choices, max_length=50, default=OrderStatus.PENDING)
+    status = models.CharField(
+        choices=OrderStatus.choices, max_length=50, default=OrderStatus.NEW
+    )
 
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -47,7 +54,7 @@ class Order(models.Model):
 class OrderProduct(models.Model):
 
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="products")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     variations = models.ManyToManyField(Variation, blank=True)
     quantity = models.IntegerField()
@@ -58,4 +65,4 @@ class OrderProduct(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.product.product_name} ordered by {self.order.full_name()} - Order Number {self.order.order_number}"
+        return f"{self.product.product_name} ordered by {self.order.email} - Order Number {self.order.order_number}"

@@ -2,25 +2,27 @@ from django.db import models
 from accounts.models import Account
 from orders.models import Order
 
+
+class PaymentStatus(models.TextChoices):
+    PENDING = "PENDING", "Pending"
+    COMPLETED = "COMPLETED", "Completed"
+    FAILED = "FAILED", "Failed"
+    REFUNDED = "REFUNDED", "Refunded"
+
 # Create your models here.
 class Payment(models.Model):
 
-    STATUS = (
-        ("PENDING", "Pending"),
-        ("COMPLETED", "Completed"),
-        ("FAILED", "Failed"),
-        ("REFUNDED", "Refunded"),
-    )
-
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True, related_name="payment")
     payment_method = models.CharField(max_length=100)
-    transaction_id = models.CharField(
+    tran_id = models.CharField(
         max_length=100, unique=True, null=True, blank=True
     )
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=20, choices=STATUS, default=STATUS)
-    
+    status = models.CharField(
+        max_length=20, choices=PaymentStatus, default=PaymentStatus.PENDING
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -1,18 +1,22 @@
 import datetime
 import math
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from carts.decorators import empty_cart_redirection
 from carts.utils import get_cart_items, get_or_create_cart
 from coupon.models import CouponUsage
 from orders.forms import OrderForm
-from orders.models import Order
+from orders.models import Order, OrderProduct
+from payment.models import Payment
 
 # Create your views here.
 
 
+@empty_cart_redirection
 def place_order(request, total=0):
     cart = get_or_create_cart(request)
     cart_items = get_cart_items(request.user, cart)
@@ -55,13 +59,12 @@ def place_order(request, total=0):
                     "city": cleaned_data["city"],
                     "state": cleaned_data["state"],
                     "address_line_1": cleaned_data["address_line_1"],
-                    "address_line_2": cleaned_data.get(
-                        "address_line_2", ""
-                    ),
+                    "address_line_2": cleaned_data.get("address_line_2", ""),
                     "order_note": cleaned_data["order_note"],
+                    "order_total": grand_total,
+                    "order_subtotal": total,
                     "tax": tax,
                     "ip": request.META.get("REMOTE_ADDR"),
-                    "order_total": grand_total,
                 }
                 order, created = Order.objects.update_or_create(
                     user=current_user, is_ordered=False, defaults=order_data
@@ -96,3 +99,34 @@ def place_order(request, total=0):
             "discount": coupon_discount,
         },
     )
+
+
+@login_required(login_url="login")
+def order_detail(request, order_detail):
+    pass
+
+
+@empty_cart_redirection
+@login_required(login_url="login")
+def order_complete(request):
+    order_number = request.GET.get("order_number")
+    payment_id = request.GET.get("payment_id")
+    current_user = request.user
+    try:
+        order = Order.objects.filter(
+            user=current_user, order_number=order_number, is_ordered=True
+        ).first()
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+        payment = Payment.objects.filter(id=payment_id).first()
+
+        context = {
+            "order": order,
+            "ordered_products": ordered_products,
+            "order_number": order.order_number,
+            "transID": payment.tran_id,
+            "payment": payment,
+            "subtotal": order.order_subtotal,
+        }
+        return render(request, "order/order_complete.html", context)
+    except (Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect("home")

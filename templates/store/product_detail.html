@@ -20,7 +20,9 @@
             action="{% url 'add_to_cart' product.id %}"
                 method="post"
             {% endcomment %}
-            <div id="add-to-cart-form">
+            <form action="{% url 'add_to_cart' product.id %}"
+                  method="post"
+                  id="add-to-cart-form">
                 {% csrf_token %}
                 {% comment %} product id {% endcomment %}
                 <div class="card">
@@ -93,7 +95,11 @@
                                     <div class="input-group-prepend">
                                         <button class="btn btn-light" type="button" id="button-plus">+</button>
                                     </div>
-                                    <input id="quantity" type="text" class="form-control" value="1">
+                                    <input name="quantity"
+                                           id="quantity"
+                                           type="text"
+                                           class="form-control"
+                                           value="1">
                                     <div class="input-group-append">
                                         <button class="btn btn-light" type="button" id="button-minus">&minus;</button>
                                     </div>

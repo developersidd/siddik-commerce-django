@@ -48,15 +48,15 @@ class OrderAdmin(admin.ModelAdmin):
         status = obj.status
         print("🐍 File: orders/admin.py | Line: 13 | status_badge ~ status", status)
 
-        if status == OrderStatus.PENDING:
+        if status == OrderStatus.NEW:
             color = "#ffc107"
         elif status == OrderStatus.COMPLETED:
             color = "#28a745"
 
-        elif status == OrderStatus.FAILED:
+        elif status == OrderStatus.CANCELLED:
             color = "#dc3545"
 
-        elif status == OrderStatus.REFUNDED:
+        elif status == OrderStatus.ACCEPTED:
             color = "#6c757d"
         else:
             color = "#ffc107"

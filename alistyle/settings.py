@@ -1,5 +1,4 @@
 from pathlib import Path
-from re import LOCALE
 from decouple import config
 import os
 from django.contrib.messages import constants as messages

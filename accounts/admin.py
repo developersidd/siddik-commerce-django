@@ -1,5 +1,4 @@
 import admin_thumbnails
-from django.conf.locale import th
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 

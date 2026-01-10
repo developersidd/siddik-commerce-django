@@ -73,8 +73,11 @@ def register(request):
             )
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()            
-            return redirect(f"/{current_language}/accounts/login/?command=verification&email={email}")
+            send_email.content_subtype = "html"
+            send_email.send()
+            return redirect(
+                f"/{current_language}/accounts/login/?command=verification&email={email}"
+            )
         else:
             print("Error", form.errors)
     else:
