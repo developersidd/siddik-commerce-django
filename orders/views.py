@@ -16,7 +16,7 @@ from payment.models import Payment
 # Create your views here.
 
 
-@empty_cart_redirection
+# @empty_cart_redirection
 def place_order(request, total=0):
     cart = get_or_create_cart(request)
     cart_items = get_cart_items(request.user, cart)
@@ -27,7 +27,7 @@ def place_order(request, total=0):
     coupon_usage_id = request.session.get("coupon_usage_id")
     current_user = request.user
     for item in cart_items:
-        total += item.product.final_price() + item.quantity
+        total += item.product.final_price() * item.quantity
     tax = math.ceil(2 * total) / 100
     grand_total = total + tax
     if coupon_usage_id:
@@ -106,8 +106,8 @@ def order_detail(request, order_detail):
     pass
 
 
-@empty_cart_redirection
 @login_required(login_url="login")
+# @empty_cart_redirection
 def order_complete(request):
     order_number = request.GET.get("order_number")
     payment_id = request.GET.get("payment_id")

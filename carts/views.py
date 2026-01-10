@@ -7,7 +7,6 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django_countries import countries
 from alistyle.utils import get_session_key
-from carts.decorators import empty_cart_redirection
 from carts.models import Cart, CartItem
 from carts.utils import (
     cart_item_exist,
@@ -72,7 +71,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
 def add_to_cart(request, product_id):
     current_path = request.META.get("HTTP_REFERER")
     try:
-        
+
         product = Product.objects.get(pk=product_id)
         current_user = request.user
         cart = get_or_create_cart(request)
@@ -149,7 +148,6 @@ def remove_cart_item(request, product_id, cart_item_id):
 
 
 # Checkout
-@empty_cart_redirection
 def checkout(request):
     try:
         current_user = request.user

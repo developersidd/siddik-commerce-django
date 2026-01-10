@@ -1,0 +1,257 @@
+{% extends 'simple-base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+    {% block extra_css %}
+        <style>
+        {% comment %}.container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 50px 40px;
+            text-align: center;
+            animation: slideUp 0.5s ease-out;
+}{% endcomment %}
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon-container {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(238, 90, 111, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(238, 90, 111, 0);
+            }
+        }
+
+        .icon-container::before,
+        .icon-container::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .icon-container::before {
+            width: 50px;
+            height: 6px;
+            transform: rotate(45deg);
+        }
+
+        .icon-container::after {
+            width: 50px;
+            height: 6px;
+            transform: rotate(-45deg);
+        }
+
+        h1 {
+            color: #2d3436;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #636e72;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .error-details {
+            background: #fff5f5;
+            border-left: 4px solid #ff6b6b;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .error-details p {
+            color: #2d3436;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .error-details strong {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .reasons {
+            text-align: left;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .reasons h3 {
+            color: #2d3436;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .reasons ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .reasons li {
+            color: #636e72;
+            font-size: 14px;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .reasons li::before {
+            content: '•';
+            color: #ff6b6b;
+            font-weight: bold;
+            position: absolute;
+            left: 8px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        {% comment %}.btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+}{% endcomment %}
+{% comment %}
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+}{% endcomment %}
+        .support-link {
+            margin-top: 25px;
+            color: #636e72;
+            font-size: 14px;
+        }
+
+        .support-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .support-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            
+           
+        }
+        </style>
+    {% endblock %}
+    <div class="container mx-auto py-5 px-4 my-5 bg-white rounded-lg shadow-sm text-center"
+         style="max-width: 600px">
+        <div class="icon-container"></div>
+        <h1>Payment Failed</h1>
+        <p class="subtitle">We couldn't process your payment. Don't worry, no charges were made to your account.</p>
+        <div class="error-details">
+            <p>
+                <strong>Transaction ID:</strong> TXN-{{ tran_id }}
+            </p>
+            <p>
+                <strong>Amount:</strong> ৳{{ order.order_total }}
+            </p>
+            <p>
+                <strong>Date:</strong>                                                             {{ order.created_at|date:"F j, Y, g:i a" }}
+            </p>
+        </div>
+        <div class="reasons">
+            <h3>Common reasons for payment failure:</h3>
+            <ul>
+                <li>Insufficient funds in your account</li>
+                <li>Incorrect card details or expired card</li>
+                <li>Payment declined by your bank</li>
+                <li>Network connection issue</li>
+                <li>Security verification required</li>
+            </ul>
+        </div>
+        <div class="button-group">
+            <form action="{% url 'ssl_payment' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="order_number" value="{{ order.order_number }}">
+                <input type="hidden" name="total_amount" value="{{ order.order_total }}">
+                <input type="hidden" name="full_name" value="{{ order.full_name }}">
+                <button type="submit" class="text-center mt-4 btn btn-primary  ">
+                    <i class="fa fa-credit-card mr-2"></i>  Try Payment Again
+                </button>
+            </form>
+            <button class="text-center text-white btn btn-secondary mt-4"
+                    style="width: 40%">
+                <a class="text-white" href="{% url "place_order" %}">Choose Another Method</a>
+            </button>
+        </div>
+        <div class="support-link">
+            Need help? <a href="#">Contact Support</a>
+        </div>
+    </div>
+{% endblock content %}

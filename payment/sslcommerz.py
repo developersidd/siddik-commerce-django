@@ -21,21 +21,19 @@ def sslcommerz_payment_gateway(cus_name, amount_to_pay, order_number, lang):
     }
 
     sslcommerz = SSLCOMMERZ(settings)
-    #print(
-    #    "🐍 File: payment/sslcommerz.py | Line: 24 | sslcommerz_payment_gateway ~ sslcommerz",
-    #    sslcommerz,
-    #)
-
+    tran_id = generate_trans_id()
     post_body = {}
     post_body["total_amount"] = amount_to_pay
     post_body["currency"] = "BDT"
-    post_body["tran_id"] = generate_trans_id()
+    post_body["tran_id"] = tran_id
     post_body["success_url"] = (
         f"http://127.0.0.1:8000/{lang}/payment/validate_payment?order_number={order_number}"
     )
 
-    post_body["fail_url"] = f"http://127.0.0.1:8000/{lang}payment/fail"
-    post_body["cancel_url"] = f"http://127.0.0.1:8000/{lang}cart"
+    post_body["fail_url"] = (
+        f"http://127.0.0.1:8000/{lang}/payment/payment-failure-callback?order_number={order_number}"
+    )
+    post_body["cancel_url"] = f"http://127.0.0.1:8000/{lang}/cart"
     post_body["emi_option"] = 0
     post_body["cus_name"] = cus_name
     post_body["cus_email"] = 'request.data["email"]'
@@ -54,6 +52,6 @@ def sslcommerz_payment_gateway(cus_name, amount_to_pay, order_number, lang):
     post_body["value_a"] = cus_name
 
     response = sslcommerz.createSession(post_body)
-    #print("🐍 File: payment/sslcommerz.py | Line: 57 | sslcommerz_payment_gateway ~ response",response)
+    # print("🐍 File: payment/sslcommerz.py | Line: 57 | sslcommerz_payment_gateway ~ response",response)
 
     return f"https://sandbox.sslcommerz.com/gwprocess/v4/gw.php?Q=pay&SESSIONKEY={response["sessionkey"]}"

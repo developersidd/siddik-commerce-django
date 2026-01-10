@@ -25,8 +25,10 @@ ALLOWED_HOSTS = []
 # )
 # SESSION_TIMEOUT_REDIRECT = '/accounts/login'
 
-
 # Application definition
+
+#SESSION_COOKIE_SAMESITE = 'Lax'  
+#SESSION_COOKIE_SECURE = False  
 
 INSTALLED_APPS = [
     "modeltranslation",

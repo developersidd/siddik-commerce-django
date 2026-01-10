@@ -8,7 +8,6 @@ from django.urls import reverse
 from django.utils.translation import get_language, get_language_info
 from django.views.decorators.csrf import csrf_exempt
 
-from carts.decorators import empty_cart_redirection
 from carts.utils import get_cart_items, get_or_create_cart
 from orders.models import Order, OrderProduct, OrderStatus
 from payment.models import Payment, PaymentStatus
@@ -18,7 +17,6 @@ from store.models import Product
 
 # Create your views here.
 @login_required(login_url="login")
-@empty_cart_redirection
 def ssl_payment(request):
     if request.method == "POST":
         order_number = request.POST["order_number"]
@@ -36,8 +34,6 @@ def ssl_payment(request):
 
 
 # basically telling the view that it doesn't need the token
-@empty_cart_redirection
-@login_required(login_url="login")
 @csrf_exempt
 def validate_payment(request):
     if request.method == "POST":
@@ -66,7 +62,6 @@ def validate_payment(request):
         return redirect("place_order")
 
 
-@empty_cart_redirection
 @login_required(login_url="login")
 def payment_success(request):
     current_user = request.user
@@ -150,3 +145,41 @@ def payment_success(request):
             return redirect(url)
 
     return redirect("cart")
+
+
+@csrf_exempt
+def payment_failure_callback(request):
+    order_number = request.GET.get("order_number")
+    tran_id = request.POST.get("tran_id")
+    status = request.POST.get("status")
+    query_string = urlencode(
+        {"order_number": order_number, "tran_id": tran_id, "status": status}
+    )
+    base_url = reverse("payment_failure")
+    url = f"{base_url}?{query_string}"
+    return redirect(url)
+
+
+@login_required(login_url="login")
+def payment_failure(request):
+    print("🐸🐸 method", request.method)
+    order_number = request.GET["order_number"]
+    tran_id = request.GET["tran_id"]
+    print(
+        "🐍 File: payment/views.py | Line: 156 | payment_failure ~ tran_id",
+        tran_id,
+        order_number,
+    )
+    current_user = request.user
+    order = None
+    if order_number:
+        order = Order.objects.filter(
+            is_ordered=False,
+            user=current_user,
+            order_number=order_number,
+        ).first()
+        order.state = OrderStatus.CANCELLED
+        print("🐍 File: payment/views.py | Line: 164 | payment_failure ~ order", order)
+    context = {"order": order, "tran_id": tran_id}
+
+    return render(request, "payment/payment_failure.html", context)
