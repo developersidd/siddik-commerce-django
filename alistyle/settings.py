@@ -16,7 +16,7 @@ SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = config("DEBUG", cast=bool, default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["siddik.pythonanywhere.com"]
 
 # Session timeout setttings
 # SESSION_EXPIRE_SECONDS = config("SESSION_EXPIRE_SECONDS", cast=int, default=True)
@@ -149,7 +149,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = '/home/siddik/siddik-commerce-django/staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / "alistyle/static",
 ]
