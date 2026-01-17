@@ -40,6 +40,7 @@ def store(request, category_slug=None):
         max_price_int = 100000
 
     products = Product.objects.filter(is_available=True, is_active=True)
+    print("🐍 File: store/views.py | Line: 43 | store ~ products",products)
     # Apply category filter
     if category_slugs and len(category_slugs) > 0:
         products = products.filter(

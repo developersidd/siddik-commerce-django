@@ -3,20 +3,15 @@ from decouple import config
 import os
 from django.contrib.messages import constants as messages
 from django.utils.translation import gettext_lazy as _
-
+from urllib.parse import urlparse
 BASE_DIR = Path(__file__).resolve().parent.parent
-# print(
-#    "🐍 File: alistyle/settings.py | Line: 6 | undefined ~ BASE_DIR",
-#    BASE_DIR,
-#    Path(__file__).resolve().parent,
-# )
 
 
 SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = config("DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = ["siddik-commerce-django.onrender.com"]
+ALLOWED_HOSTS = ["siddik-commerce-django.onrender.com", "127.0.0.1"]
 
 # Session timeout setttings
 # SESSION_EXPIRE_SECONDS = config("SESSION_EXPIRE_SECONDS", cast=int, default=True)
@@ -85,12 +80,29 @@ AUTH_USER_MODEL = "accounts.Account"  # appname/modelname
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": config("DB_ENGINE"),
-        "NAME": BASE_DIR / config("DB_NAME"),
+#DATABASES = {
+#    "default": {
+#        "ENGINE": config("DB_ENGINE"),
+#        "NAME": BASE_DIR / config("DB_NAME"),
+#    }
+#}
+
+DATA_BASE_URL = config("DATA_BASE_URL")
+
+if DATA_BASE_URL:
+    url = urlparse(DATA_BASE_URL)
+    
+    DATABASES = {
+        "default": {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
+        }
     }
-}
+
 
 
 # Password validation
