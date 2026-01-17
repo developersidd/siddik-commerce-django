@@ -1,5 +1,5 @@
-{% load i18n %}
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,26 +9,32 @@
         <meta name="viewport"
               content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>
-            {% block title %}
-            {% endblock title %}
+            {% block title %}Siddik Commerce - Django E-commerce{% endblock title %}
         </title>
-        <link href="{% static 'images/favicon.ico' %}"
-              rel="shortcut icon"
-              type="image/x-icon" />
+        <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <!-- CSS Files -->
-        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" />
+        <link href="{% static 'css/bootstrap.css' %}"
+              rel="stylesheet"
+              type="text/css" />
         <link href="{% static 'fonts/fontawesome/css/all.min.css' %}"
+              type="text/css"
               rel="stylesheet" />
-        <link href="{% static 'css/ui.css' %}" rel="stylesheet" />
-        <link href="{% static 'css/custom.css' %}" rel="stylesheet" />
-        <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
-        <!-- jQuery -->
-        <script src="{% static 'js/jquery-2.0.0.min.js' %}"></script>
-        <!-- Bootstrap -->
-        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-        <!-- Custom JS -->
-        <script src="{% static 'js/script.js' %}"></script>
+        <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/responsive.css' %}"
+              rel="stylesheet"
+              type="text/css" />
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- jQuery (load ONCE, at the top) -->
+        <script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+        <!-- Bootstrap JS (load AFTER jQuery) -->
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"
+                type="text/javascript"></script>
+        <!-- Custom JavaScript (load LAST) -->
+        <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
     </head>
+    
     <body>
         <header class="section-header">
             <section class="header-main border-bottom">
@@ -44,11 +50,7 @@
                         <div class="col-lg-6 col-sm-12">
                             <form action="{% url 'store' %}" method="GET" class="search">
                                 <div class="input-group w-100">
-                                    <input type="text"
-                                           class="form-control"
-                                           placeholder="{% trans "Search" %}"
-                                           name="keyword"
-                                           value="{{ request.GET.keyword }}" />
+                                    <input type="text" class="form-control" placeholder="{% trans "Search" %}" name="keyword" value="{{ request.GET.keyword }}" />
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit">
                                             <i class="fa fa-search"></i> {% trans "Search" %}
