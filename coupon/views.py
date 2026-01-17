@@ -1,4 +1,3 @@
-from turtle import isvisible
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
