@@ -105,7 +105,6 @@ if DATA_BASE_URL:
         }
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -162,12 +161,15 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 STATIC_URL = "/static/"
-STATIC_ROOT = (
-    BASE_DIR / "static"
-)  # Where collectstatic cmd puts all collected static files (for production)
+# Where collectstatic cmd puts all collected static files (for production)
+STATIC_ROOT = BASE_DIR / "static"
+print(
+    "🐍 File: alistyle/settings.py | Line: 165 | undefined ~ STATIC_ROOT", STATIC_ROOT
+)
 STATICFILES_DIRS = [
     BASE_DIR / "alistyle/static",
 ]
+print("🐍 File: alistyle/settings.py | Line: 170 | undefined ~ STATICFILES_DIRS",STATICFILES_DIRS)
 
 # Additional directories where Django looks for static files during development
 
