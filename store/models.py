@@ -1,5 +1,5 @@
 from datetime import date, datetime
-
+from cloudinary.models import CloudinaryField
 from itertools import product
 from django.db import models
 from django.db.models import indexes
@@ -340,7 +340,7 @@ class ProductGallery(models.Model):
 # Banner Slider Model
 class BannerSlider(models.Model):
     title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to="store/banners")
+    image = CloudinaryField("image", folder="django-ecommerce")
     link = models.URLField(max_length=200, blank=True)
     position = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
