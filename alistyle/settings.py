@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary",
     "accounts",
     "category",
     "store",
@@ -151,11 +152,19 @@ MODELTRANSLATION_FALLBACK_LANGUAGES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Cloudinary settings
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": config("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": config("CLOUDINARY_API_KEY"),
+    "API_SECRET": config("CLOUDINARY_API_SECRET"),
+}
+
+# Use Cloudinary for media files
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -163,15 +172,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATIC_URL = "/static/"
 # Where collectstatic cmd puts all collected static files (for production)
 STATIC_ROOT = BASE_DIR / "static"
-print(
-    "🐍 File: alistyle/settings.py | Line: 165 | undefined ~ STATIC_ROOT", STATIC_ROOT
-)
+
+# Additional directories where Django looks for static files during development
 STATICFILES_DIRS = [
     BASE_DIR / "alistyle/static",
 ]
-print("🐍 File: alistyle/settings.py | Line: 170 | undefined ~ STATICFILES_DIRS",STATICFILES_DIRS)
-
-# Additional directories where Django looks for static files during development
 
 # for Render Production version
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
