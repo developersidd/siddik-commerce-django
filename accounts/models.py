@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django_countries import countries
+from cloudinary.models import CloudinaryField
 
 
 # Custom Account Manager
@@ -92,7 +93,7 @@ class UserProfile(models.Model):
     
     address_line_1 = models.CharField(blank=True, max_length=100)
     address_line_2 = models.CharField(blank=True, max_length=100)
-    avatar = models.ImageField(upload_to="avatars", blank=True)
+    avatar = CloudinaryField("avatar", folder="django-ecommerce")
     gender = models.CharField(choices=GENDER_CHOICE, blank=True)
     city = models.CharField(max_length=30)
     state = models.CharField(max_length=30)
