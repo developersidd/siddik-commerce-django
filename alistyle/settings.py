@@ -95,33 +95,61 @@ AUTH_USER_MODEL = "accounts.Account"  # appname/modelname
 # }
 
 DATA_BASE_URL = config("DATA_BASE_URL")
-
-if DATA_BASE_URL:
-    url = urlparse(DATA_BASE_URL)
-
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": url.path[1:],
-            "USER": url.username,
-            "PASSWORD": url.password,
-            "HOST": url.hostname,
-            "PORT": url.port,
-            # Keep connections alive for 10 minutes
-            "CONN_MAX_AGE": 600,  
-            "OPTIONS": {
-                "options": "-c statement_timeout=30000",  # 30 second query timeout
-                "connect_timeout": 10,
-            },
-        }
+#
+# if DATA_BASE_URL:
+url = urlparse(DATA_BASE_URL)
+#
+#    DATABASES = {
+#        "default": {
+#            "ENGINE": "django.db.backends.postgresql",
+#            "NAME": url.path[1:],
+#            "USER": url.username,
+#            "PASSWORD": url.password,
+#            "HOST": url.hostname,
+#            "PORT": url.port,
+#            # Keep connections alive for 10 minutes
+#            "CONN_MAX_AGE": 0,
+#            "OPTIONS": {
+#                #"options": "-c statement_timeout=30000",  # 30 second query timeout
+#                "connect_timeout": 10,
+#                #"sssmode": "require",
+#            },
+#        }
+#    }
+#    #DATABASES = {
+#    #    "default": {
+#    #        "ENGINE": "django.db.backends.postgresql",
+#    #        "NAME": url.path[1:],
+#    #        "USER": url.username,
+#    #        "PASSWORD": url.password,
+#    #        "HOST": url.hostname,
+#    #        "PORT": url.port,
+#    #        # Keep connections alive for 10 minutes
+#    #        "CONN_MAX_AGE": 600,
+#    #        "OPTIONS": {
+#    #            "options": "-c statement_timeout=30000",  # 30 second query timeout
+#    #            "connect_timeout": 10,
+#    #        },
+#    #    }
+#    #}
+# else:
+#
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": url.path[1:],
+        "USER": url.username,
+        "PASSWORD": url.password,
+        "HOST": url.hostname,
+        "PORT": url.port,
+        "CONN_MAX_AGE": 600,  
+        "OPTIONS": {
+            "connect_timeout": 10,
+            "sslmode": "require",  
+        },
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+}
+    
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

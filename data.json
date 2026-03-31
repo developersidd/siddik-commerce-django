@@ -1,1 +1,0 @@
-[{"model": "sessions.session", "pk": "ze8qimk34fkiolx9dgz2klfardozus6u", "fields": {"session_data": "e30:1vh8wq:XDOaR1s1UXlz5-vaW46o-7QN5ddj1viKpl4XT50Z-xY", "expire_date": "2026-01-31T16:14:48.163Z"}}, {"model": "carts.cart", "pk": 1, "fields": {"cart_id": "ze8qimk34fkiolx9dgz2klfardozus6u", "date_added": "2026-01-17T16:14:46.690Z"}}]
